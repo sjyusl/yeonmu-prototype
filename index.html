@@ -39,6 +39,8 @@ body{margin:0;background:#fff}
 }
 /* 웹 버전: 앱 화면을 브라우저 가운데에 배치 */
 body{display:flex;justify-content:center;align-items:center;min-height:100vh;min-height:100dvh}
+/* 웹 버전: 화면 좌우 끝 1px 구분선 (primitive/neutral/200 #EAE9EC) */
+.app{box-shadow:-1px 0 0 #EAE9EC, 1px 0 0 #EAE9EC}
 /* 어떤 화면에서 열어도 세로를 꽉 채움 (100dvh 미지원 브라우저는 100vh) */
 @supports not (height: 100dvh){.app{height:100vh !important}}
 /* 웹에서 스크롤바 숨김 (스크롤 동작은 유지) */
