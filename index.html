@@ -89,6 +89,8 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 .cat.on{background:#B086F0;color:#fff;border-color:#B086F0 !important;font-weight:600}
 .utab{flex:1;height:48px;display:flex !important;align-items:center;justify-content:center;font-size:16px;font-weight:400;line-height:1;color:#7C7B7E;border-bottom:2px solid #EAE9EC !important;text-decoration:none}
 .utab.on{color:#9A6BE3;border-color:#B086F0 !important;font-weight:600}
+.utab.auto{flex:none;padding:0 12px;margin-bottom:-1px;border-bottom-color:transparent !important}
+.utab.auto.on{border-bottom-color:#B086F0 !important}
 .utab:hover{color:#9A6BE3}
 .tabbar{position:absolute;left:0;right:0;bottom:0;height:calc(64px + var(--tbb));background:#fff;border-radius:24px 24px 0 0;box-shadow:var(--fx-top);display:flex;justify-content:space-around;padding:8px 24px 0;z-index:20}
 .tab{width:96px;height:56px;border-radius:16px;display:flex !important;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:12px;font-weight:400;line-height:1.4;color:#5E5D60}
@@ -112,8 +114,10 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 .bnr img{-webkit-user-drag:none;pointer-events:none}
 .track.t0{transform:translateX(0)}.track.t1{transform:translateX(-393px)}.track.t2{transform:translateX(-786px)}
 .slide{width:393px;height:100%;position:relative;overflow:hidden;flex:none;display:block !important}
-.dot{width:8px;height:8px;border-radius:4px;background:rgba(255,255,255,.55);transition:width .3s}
-.dot.on{width:20px;background:#fff}
+.dot{width:6px;height:6px;border-radius:10px;background:rgba(255,255,255,.25)}
+.dot.on{width:16px;background:rgba(255,255,255,.8)}
+.btxt{position:absolute;left:0;right:0;bottom:0;opacity:0;transition:opacity .4s ease}
+.btxt.on{opacity:1}
 .hdr{position:absolute;top:0;left:0;right:0;height:calc(54px + var(--sb));padding:var(--sb) 8px 0 24px;z-index:10;display:flex;align-items:center;justify-content:space-between;transition:background .2s}
 .hdr.solid{background:#fff;box-shadow:var(--fx-bottom)}
 .hdr .logo{width:120px;height:auto;filter:brightness(0) invert(1)}
@@ -152,7 +156,7 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 .cal-d.sel{background:#B086F0;color:#fff;font-weight:600}
 .cal-nav{width:40px;height:40px;display:flex !important;align-items:center;justify-content:center;border-radius:20px;color:#2C2B2E}
 .cal-nav:hover{background:#F8F7F9}
-.fchip{height:36px;border-radius:18px;border:1.5px solid #2C2B2E !important;padding:0 12px !important;display:inline-flex !important;align-items:center;gap:6px;font-size:14px;font-weight:600;line-height:1;color:#2C2B2E}
+.fchip{height:32px;border-radius:20px;border:1.5px solid #A4A3A6 !important;padding:0 12px 0 16px !important;display:inline-flex !important;align-items:center;gap:4px;font-size:16px;font-weight:400;line-height:1;color:#919193}
 .fchip.on{border-color:#2C2B2E !important;color:#2C2B2E}
 .wstar{width:52px;height:52px;display:flex !important;align-items:center;justify-content:center;color:#EAE9EC}
 .wstar.on{color:#FFCA42}
@@ -231,17 +235,17 @@ Apple로 시작하기</button>
 <span style="width: 24px; height: 24px; border-radius: 12px; background: #B086F0; color: #ffffff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center">2</span>
 </div>
 <h1 style="margin: 20px 0 0; font-size: 20px; font-weight: 700; text-align: center">앱에서 사용할 별명을 정해주세요</h1>
-<p style="margin: 8px 0 0; font-size: 14px; color: #7C7B7E; text-align: center">별명은 가입 후에도 변경 가능해요</p>
+<p style="margin: 8px 0 0; font-size: 16px; color: #A4A3A6; text-align: center">별명은 가입 후에도 변경 가능해요</p>
 <div style="padding: 0 24px; margin-top: 56px">
 <label for="nick" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">별명</label>
 <div style="display: flex; align-items: center; gap: 8px; border-bottom: 1.5px solid {{nickLine}}; height: 52px">
-<input id="nick" value="{{nick}}" onChange="{{onNick}}" placeholder="별명을 입력해주세요 (8자 이내)" autoComplete="off" style="flex: 1; min-width: 0; border: 0; outline: none; font-size: 20px; font-weight: 700; color: {{nickColor}}; background: transparent">
+<input id="nick" value="{{nick}}" onChange="{{onNick}}" placeholder="6글자 이내로 입력해 주세요" autoComplete="off" style="flex: 1; min-width: 0; border: 0; outline: none; font-size: 16px; font-weight: 700; color: #000000; background: transparent">
 <sc-if value="{{hasNick}}" hint-placeholder-val="{{ false }}">
 <button class="iconbtn" onClick="{{clearNick}}" aria-label="입력 지우기" style="width: 32px; height: 32px"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#C2C1C4"/><path d="M15 9l-6 6M9 9l6 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/></svg></button>
 </sc-if>
 </div>
 <sc-if value="{{hasNickMsg}}" hint-placeholder-val="{{ false }}">
-<p style="margin: 8px 0 0; display: flex; align-items: center; gap: 4px; font-size: 13px; color: {{nickColor}}">
+<p style="margin: 8px 0 0; display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: 500; color: {{nickColor}}">
 <sc-if value="{{nickErr}}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg></sc-if>
 <sc-if value="{{nickOk}}" hint-placeholder-val="{{ false }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></sc-if>
 {{nickMsg}}</p>
@@ -267,26 +271,25 @@ Apple로 시작하기</button>
 <div class="scroll" onScroll="{{onHomeScroll}}" style="padding-bottom: calc(72px + var(--tbb))">
 
 <!-- Banner -->
-<div class="bnr" onPointerDown="{{bnDown}}" onPointerMove="{{bnMove}}" onPointerUp="{{bnUp}}" onPointerCancel="{{bnUp}}" onClickCapture="{{bnClick}}" style="height: 540px; position: relative; overflow: hidden; background: #6E5A9E">
+<!-- Figma 배너(3078:14469): 이미지만 슬라이드, 그라데이션은 고정, 텍스트는 크로스페이드 -->
+<div class="bnr" onPointerDown="{{bnDown}}" onPointerMove="{{bnMove}}" onPointerUp="{{bnUp}}" onPointerCancel="{{bnUp}}" onClickCapture="{{bnClick}}" style="height: 540px; position: relative; overflow: hidden; background: #8967BD">
 <div class="track t{{banner}}">
 <sc-for list="{{slides}}" as="b" hint-placeholder-count="3">
-<button class="slide" onClick="{{b.open}}" aria-label="{{b.title}}">
-<sc-if value="{{b.isImage}}" hint-placeholder-val="{{ true }}">
-<img src="{{b.img}}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top">
-</sc-if>
-<sc-if value="{{b.isPoster}}" hint-placeholder-val="{{ false }}">
-<img src="{{b.img}}" alt="" style="position: absolute; inset: -40px; width: calc(100% + 80px); height: calc(100% + 80px); object-fit: cover; filter: blur(22px) saturate(1.2)">
-<img src="{{b.img}}" alt="" style="position: absolute; left: 50%; top: 128px; transform: translateX(-50%); width: 186px; height: 248px; object-fit: cover; border-radius: 6px; box-shadow: 0 16px 40px rgba(0,0,0,.35)">
-</sc-if>
-<div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.25) 0%, rgba(0,0,0,0) 22%, rgba(0,0,0,0) 55%, rgba(110,76,178,.92) 100%)"></div>
-<div style="position: absolute; left: 24px; right: 24px; bottom: 56px; color: #ffffff; text-align: left">
-<div style="font-size: 24px; font-weight: 700; line-height: 1.2">{{b.title}}</div>
-<div style="font-size: 14px; line-height: 1.5; margin-top: 8px; opacity: .92">{{b.sub}}</div>
-</div>
+<button class="slide" onClick="{{b.open}}" aria-label="{{b.label}}">
+<img src="{{b.img}}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover">
 </button>
 </sc-for>
 </div>
-<div style="position: absolute; left: 24px; bottom: 28px; display: flex; gap: 6px; align-items: center">
+<div aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(137,103,189,0) 60%, #8967BD 100%), linear-gradient(180deg, rgba(0,0,0,.25) 0%, rgba(0,0,0,.10) 24%, rgba(0,0,0,.35) 60%, rgba(0,0,0,.70) 100%)"></div>
+<div aria-live="polite" style="position: absolute; left: 24px; right: 24px; bottom: 54px; height: 64px; pointer-events: none">
+<sc-for list="{{slides}}" as="b" hint-placeholder-count="3">
+<div class="btxt {{b.cls}}">
+<div style="font-size: 28px; font-weight: 700; line-height: 36px; color: #FFFFFF; text-shadow: 0 0 2px rgba(0,0,0,.25)">{{b.title}}</div>
+<div style="margin-top: 4px; font-size: 16px; font-weight: 400; line-height: 24px; color: #E6D5F9; text-shadow: 0 0 2px rgba(0,0,0,.25)">{{b.sub}}</div>
+</div>
+</sc-for>
+</div>
+<div style="position: absolute; left: 24px; bottom: 24px; display: flex; gap: 8px; align-items: center">
 <sc-for list="{{dots}}" as="d" hint-placeholder-count="3">
 <button class="dot {{d.cls}}" onClick="{{d.pick}}" aria-label="{{d.label}}"></button>
 </sc-for>
@@ -304,7 +307,7 @@ Apple로 시작하기</button>
 <div style="padding: 16px 0 32px">
 <div style="padding: 0 24px 16px">
 <h2 class="sec-title">따끈따끈! New 공연 후기</h2>
-<p class="sec-sub">다른 사용자들의 실시간 리뷰를 확인해보세요! <span style="color: #A4A3A6">(프로토타입 예시 후기)</span></p>
+<p class="sec-sub">다른 사용자들의 실시간 리뷰를 확인해보세요!</p>
 </div>
 <div class="hscroll" onMouseDown="{{hsDown}}" onMouseMove="{{hsMove}}" onMouseUp="{{hsUp}}" onMouseLeave="{{hsUp}}" onClickCapture="{{hsClick}}">
 <sc-for list="{{homeReviews}}" as="r" hint-placeholder-count="3">
@@ -407,7 +410,7 @@ Apple로 시작하기</button>
 </div>
 </div>
 <div class="divider"></div>
-<div class="scroll" onClick="{{kbHide}}" style="padding-bottom: calc(76px + var(--tbb))">
+<div class="scroll" onClick="{{kbHide}}" style="padding-bottom: calc(12px + var(--hb34))">
 <sc-if value="{{hasRecent}}" hint-placeholder-val="{{ true }}">
 <div style="padding: 24px 0 8px">
 <h2 style="margin: 0 24px 12px; font-size: 16px; font-weight: 700; line-height: 1.2">최근 검색어</h2>
@@ -422,13 +425,7 @@ Apple로 시작하기</button>
 </div>
 </sc-if>
 <div style="padding: 24px 24px 0">
-<div style="display: flex; align-items: center; justify-content: space-between; margin: 0 0 8px">
-<h2 style="margin: 0; font-size: 16px; font-weight: 700; line-height: 1.2">이번 주 예매 TOP 10</h2>
-<div style="display: flex; gap: 6px">
-<sc-for list="{{topCats}}" as="c" hint-placeholder-count="2"><button class="pill {{c.cls}}" onClick="{{c.pick}}" style="height: 30px; padding: 0 12px; font-size: 13px">{{c.label}}</button></sc-for>
-</div>
-</div>
-<p style="margin: 0 0 6px; font-size: 12px; line-height: 1.4; color: #7C7B7E">KOPIS 주간 예매 순위 · {{boxRange}}</p>
+<h2 style="margin: 0 0 8px; font-size: 16px; font-weight: 700; line-height: 1.2">티켓 판매량 TOP 10</h2>
 <sc-for list="{{topList}}" as="x" hint-placeholder-count="10">
 <button onClick="{{x.open}}" style="display: flex; align-items: center; gap: 12px; width: 100%; height: 46px">
 <span style="width: 20px; text-align: center; font-size: 16px; font-weight: 700; color: #2C2B2E">{{x.rank}}</span>
@@ -443,15 +440,15 @@ Apple로 시작하기</button>
 <sc-if value="{{searching}}" hint-placeholder-val="{{ false }}">
 <div style="display: flex; align-items: center; gap: 4px; padding: 4px 16px 4px 8px">
 <button class="iconbtn" onClick="{{clearQ}}" aria-label="검색 초기화"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
-<div style="flex: 1; height: 44px; border: 1.5px solid #B086F0; border-radius: 22px; display: flex; align-items: center; padding: 0 6px 0 16px; gap: 4px">
+<div style="flex: 1; min-width: 0; height: 44px; border: 1.5px solid #B086F0; border-radius: 22px; display: flex; align-items: center; padding: 0 6px 0 16px; gap: 4px">
 <label for="q2" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">공연명 검색</label>
 <input id="q2" value="{{q}}" onChange="{{onQ}}" onKeyDown="{{onQKey}}" onFocus="{{kbShow}}" onClick="{{kbShow}}" inputMode="none" placeholder="공연명을 입력하세요" autoComplete="off" style="flex: 1; min-width: 0; border: 0; outline: none; font-size: 16px; font-weight: 600; color: #272727; background: transparent">
 <button class="iconbtn" onClick="{{clearQText}}" aria-label="입력 지우기" style="width: 32px; height: 32px"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#C2C1C4"/><path d="M15 9l-6 6M9 9l6 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/></svg></button>
 </div>
 </div>
-<div style="display: flex; padding: 0 24px">
+<div style="display: flex; padding: 0 0 0 12px; border-bottom: 1px solid #EAE9EC">
 <sc-for list="{{searchCats}}" as="c" hint-placeholder-count="3">
-<button class="utab {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button>
+<button class="utab auto {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button>
 </sc-for>
 </div>
 <div style="display: flex; gap: 8px; padding: 16px 24px 4px">
@@ -505,29 +502,26 @@ Apple로 시작하기</button>
 </div>
 <div style="padding: 16px 24px 24px; display: flex; flex-direction: column; align-items: center; gap: 12px">
 <span class="status {{d.statusCls}}">{{d.status}}</span>
-<div style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: #5E5D60"><span>{{d.type}}</span><span style="width: 1px; height: 12px; background: #D6D5D8"></span><span>{{d.period}}</span></div>
+<div style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: #5E5D60"><span>{{d.type}}</span><span style="width: 1px; height: 12px; background: #D6D5D8"></span><span>{{d.age}}</span></div>
 <h1 style="margin: 0; font-size: 20px; font-weight: 700; text-align: center; line-height: 1.35">{{d.title}}</h1>
 </div>
-<div style="display: flex; position: sticky; top: 0; z-index: 5; background: #ffffff">
-<button class="utab {{tInfo}}" onClick="{{tabInfo}}">상세정보</button>
-<button class="utab {{tTicket}}" onClick="{{tabTicket}}">티켓예매</button>
-<button class="utab {{tReview}}" onClick="{{tabReview}}">관람후기</button>
+<div style="display: flex; position: sticky; top: 0; z-index: 5; background: #ffffff; padding-left: 12px; border-bottom: 1px solid #EAE9EC">
+<button class="utab auto {{tInfo}}" onClick="{{tabInfo}}">상세정보</button>
+<button class="utab auto {{tTicket}}" onClick="{{tabTicket}}">티켓예매</button>
+<button class="utab auto {{tReview}}" onClick="{{tabReview}}">관람후기</button>
 </div>
 
 <section id="d-info" class="anchor" style="padding: 12px 0 16px">
 <h2 style="margin: 0; padding: 14px 24px 8px; font-size: 20px; font-weight: 700; line-height: 1.2">공연정보</h2>
 <div class="info-row"><span class="k">공연기간</span><span class="v">{{d.period}}</span></div>
 <div class="info-row"><span class="k">공연장소</span><span class="v">{{d.venue}}</span></div>
-<div class="info-row"><span class="k">장르</span><span class="v">{{d.type}}</span></div>
 <sc-for list="{{d.rows}}" as="row" hint-placeholder-count="5">
 <div class="info-row"><span class="k">{{row.k}}</span><span class="v" style="white-space: pre-line">{{row.v}}</span></div>
 </sc-for>
-<p style="margin: 6px 24px 0; font-size: 12px; line-height: 1.4; color: #7C7B7E">KOPIS 공연예술통합전산망 · {{fetchedAt}} 기준</p>
 </section>
 <div class="divider"></div>
 <section style="padding: 12px 0 16px">
 <h2 style="margin: 0; padding: 14px 24px 8px; font-size: 20px; font-weight: 700; line-height: 1.2">위치/시설</h2>
-<div class="info-row"><span class="k">공연장</span><span class="v">{{d.venue}}</span></div>
 <div class="info-row"><span class="k">주소</span><span class="v">{{d.fac.addr}}</span></div>
 <div class="info-row"><span class="k">지도 보기</span>
 <div class="v">
@@ -536,7 +530,7 @@ Apple로 시작하기</button>
 <span style="position: absolute; left: 34%; top: -10%; width: 10px; height: 120%; background: #FFFFFF; transform: rotate(12deg); box-shadow: 0 0 0 1px #E6ECE8"></span>
 <svg width="34" height="44" viewBox="0 0 34 44" aria-hidden="true" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -88%)"><path d="M17 43C17 43 33 27 33 16.5C33 7.4 25.8 1 17 1S1 7.4 1 16.5C1 27 17 43 17 43Z" fill="#B086F0" stroke="#fff" stroke-width="2"/><circle cx="17" cy="16" r="6" fill="#fff"/></svg>
 <span class="ellip1" style="position: absolute; left: 10px; right: 10px; bottom: 30px; text-align: center; font-size: 12px; font-weight: 600; color: #2C2B2E">{{d.fac.name}}</span>
-<span style="position: absolute; left: 0; right: 0; bottom: 0; height: 26px; background: rgba(255,255,255,.92); display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 12px; color: #9A6BE3; font-weight: 600">카카오맵에서 보기 ↗</span>
+<span aria-hidden="true" style="position: absolute; left: 8px; top: 8px; width: 28px; height: 28px; border-radius: 6px; background: rgba(255,255,255,.9); display: flex; align-items: center; justify-content: center; color: #5E5D60"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/></svg></span>
 </a>
 </div>
 </div>
@@ -558,9 +552,7 @@ Apple로 시작하기</button>
 <sc-if value="{{d.fac.noBarrier}}" hint-placeholder-val="{{ false }}"><span style="color: #7C7B7E">정보 없음</span></sc-if>
 </div>
 </div>
-<sc-if value="{{d.fac.hasTel}}" hint-placeholder-val="{{ true }}">
-<div class="info-row"><span class="k">문의</span><span class="v">{{d.fac.tel}}</span></div>
-</sc-if>
+
 </section>
 <div class="divider"></div>
 <section style="padding: 12px 0 0">
@@ -664,13 +656,22 @@ Apple로 시작하기</button>
 </div>
 </div>
 <div style="padding: 28px 24px 8px">
-<h2 style="margin: 0; font-size: 20px; font-weight: 700; line-height: 1.2">별점 선택 <span style="color: #FA6363">*</span></h2>
+<h2 style="margin: 0; font-size: 20px; font-weight: 700; line-height: 1.2">별점 선택</h2>
 <div style="display: flex; justify-content: space-between; margin-top: 12px">
 <sc-for list="{{wStarsList}}" as="st" hint-placeholder-count="5">
 <button class="wstar {{st.cls}}" onClick="{{st.pick}}" aria-label="{{st.label}}"><svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4 6.1 20.5l1.2-6.5L2.5 9.4l6.6-.9z"/></svg></button>
 </sc-for>
 </div>
-<p style="margin: 8px 0 0; text-align: center; font-size: 14px; font-weight: 600; color: {{wStarColor}}">{{wStarText}}</p>
+<!-- Figma 별점 슬라이더: 선택한 별까지 채워진 트랙 + 핸들 -->
+<div onClick="{{wSlide}}" aria-hidden="true" style="position: relative; height: 44px; margin-top: 8px; cursor: pointer">
+<span style="position: absolute; left: 0; right: 0; top: 18px; height: 8px; border-radius: 4px; background: #EAE9EC"></span>
+<span style="position: absolute; left: 0; top: 18px; height: 8px; border-radius: 4px; background: #B086F0; width: {{wFillW}}"></span>
+<sc-for list="{{wDots}}" as="d" hint-placeholder-count="4"><span style="position: absolute; top: 20px; left: {{d.left}}; width: 4px; height: 4px; margin-left: -2px; border-radius: 2px; background: #C2C1C4"></span></sc-for>
+<sc-if value="{{wHasKnob}}" hint-placeholder-val="{{ false }}">
+<span style="position: absolute; top: 0; left: {{wKnobL}}; width: 44px; height: 44px; margin-left: -22px; border-radius: 22px; background: rgba(176,134,240,.25)"></span>
+<span style="position: absolute; top: 8px; left: {{wKnobL}}; width: 28px; height: 28px; margin-left: -14px; border-radius: 14px; background: #FFFFFF; box-shadow: 0 0 0 2px #B086F0"></span>
+</sc-if>
+</div>
 </div>
 <sc-for list="{{wGroups}}" as="g" hint-placeholder-count="3">
 <div style="padding: 24px 24px 4px">
@@ -684,10 +685,10 @@ Apple로 시작하기</button>
 </sc-for>
 <div style="padding: 28px 24px 4px">
 <label for="seat" style="display: block; margin: 0 0 12px; font-size: 20px; font-weight: 700; line-height: 1.2">관람 좌석</label>
-<input id="seat" class="field" value="{{wSeat}}" onChange="{{onSeat}}" placeholder="관람한 좌석을 알려주세요 (예: 1층 B열 7번)" autoComplete="off">
+<input id="seat" class="field" value="{{wSeat}}" onChange="{{onSeat}}" placeholder="관람한 좌석을 알려주세요" autoComplete="off">
 </div>
 <div style="padding: 28px 24px 8px">
-<label for="rtext" style="display: block; margin: 0 0 12px; font-size: 20px; font-weight: 700; line-height: 1.2">후기 입력 <span style="color: #FA6363">*</span></label>
+<label for="rtext" style="display: block; margin: 0 0 12px; font-size: 20px; font-weight: 700; line-height: 1.2">후기 입력</label>
 <div style="position: relative">
 <textarea id="rtext" class="field" value="{{wText}}" onChange="{{onText}}" maxLength="1000" placeholder="후기는 최대 1,000글자까지 작성 가능합니다" style="height: 168px; padding: 14px 16px 32px; resize: none; line-height: 1.55"></textarea>
 <span style="position: absolute; right: 14px; bottom: 10px; font-size: 12px; color: #7C7B7E">{{wCount}} / 1,000</span>
@@ -725,9 +726,9 @@ Apple로 시작하기</button>
 </div>
 </div>
 <div style="margin-top: 28px; background: #ffffff; border-radius: 24px 24px 0 0; min-height: 520px; padding-top: 8px">
-<div style="display: flex; padding: 0 24px; position: sticky; top: 0; background: #ffffff; z-index: 3; border-radius: 24px 24px 0 0">
-<button class="utab {{myTabReview}}" onClick="{{myReviewTab}}">내 후기</button>
-<button class="utab {{myTabWish}}" onClick="{{myWishTab}}">찜한 공연</button>
+<div style="display: flex; justify-content: center; padding: 0 24px; position: sticky; top: 0; background: #ffffff; z-index: 3; border-radius: 24px 24px 0 0">
+<button class="utab auto {{myTabReview}}" onClick="{{myReviewTab}}">내 후기</button>
+<button class="utab auto {{myTabWish}}" onClick="{{myWishTab}}">찜한 공연</button>
 </div>
 <sc-if value="{{showMyReviews}}" hint-placeholder-val="{{ true }}">
 <div style="padding: 20px 24px 0">
@@ -1092,8 +1093,8 @@ class Component extends DCLogic {
       else if (['연뮤덕', '극장가는길', '관리자', '내안의연뮤'].indexOf(n) >= 0) { nickState = 'err'; nickMsg = '이미 사용 중인 별명이에요.'; }
       else { nickState = 'ok'; nickMsg = '사용 가능한 별명이에요.'; }
     }
-    const nickColor = nickState === 'err' ? '#FA6363' : nickState === 'ok' ? '#9A6BE3' : '#272727';
-    const nickLine = nickState === 'err' ? '#FA6363' : nickState === 'ok' ? '#B086F0' : '#D6D5D8';
+    const nickColor = nickState === 'err' ? '#FA6363' : nickState === 'ok' ? '#6AC579' : '#272727';
+    const nickLine = nickState === 'err' ? '#FA6363' : nickState === 'ok' ? '#6AC579' : '#B086F0';
 
     // home
     const homeCatDefs = [['all', '전체'], ['play', '연극'], ['musical', '뮤지컬']];
@@ -1106,19 +1107,29 @@ class Component extends DCLogic {
       .sort((a, b) => rank(a.id) - rank(b.id) || stOrder[a.status] - stOrder[b.status] || (a.from < b.from ? -1 : 1)).slice(0, 10).map(card);
     const boxIds = (cat) => (BOX[cat] || []).map((b) => b[0]).filter((id) => byId[id]);
     const boxMerged = s.homeCat === 'play' ? boxIds('AAAA') : s.homeCat === 'musical' ? boxIds('GGGA') : boxIds('GGGA').slice(0, 20).flatMap((id, i) => [id, boxIds('AAAA')[i]]).filter(Boolean);
+    const runDays = (x) => (Date.parse(String(x.to).replace(/\./g, '-')) - Date.parse(String(x.from).replace(/\./g, '-'))) || 0;
     const lists = {
-      new: SHOWS.filter((x) => x.status === '공연중' && catOk(x, s.homeCat)).sort((a, b) => (a.from > b.from ? -1 : 1)).slice(0, 5),
-      top: boxMerged.slice(0, 5).map((id) => byId[id]),
-      soon: SHOWS.filter((x) => x.status === '오픈예정' && catOk(x, s.homeCat)).sort((a, b) => (a.from < b.from ? -1 : 1)).slice(0, 5)
+      new: SHOWS.filter((x) => x.status === '공연중' && catOk(x, s.homeCat)).sort((a, b) => (a.from > b.from ? -1 : 1)).slice(0, 3),
+      // 스테디셀러: 오픈런 우선, 수집 데이터에 오픈런이 없으면 공연 중인 작품 중 공연 기간이 가장 긴 순
+      steady: SHOWS.filter((x) => (x.status === '오픈런' || x.status === '공연중') && catOk(x, s.homeCat)).sort((a, b) => (b.status === '오픈런') - (a.status === '오픈런') || runDays(b) - runDays(a)).slice(0, 3),
+      soon: SHOWS.filter((x) => x.status === '오픈예정' && catOk(x, s.homeCat)).sort((a, b) => (a.from < b.from ? -1 : 1)).slice(0, 3)
     };
     const sections = [
       { title: '이번주 신작 라인업', sub: '최근 새롭게 개막한 공연들', g: 'new' },
-      { title: '이번 주 예매 랭킹', sub: 'KOPIS 주간 예매 순위 기준 인기 공연', g: 'top' },
+      { title: '스테디셀러 오픈런 공연', sub: '검증된 명작, 기간 제한 없는 상설 공연', g: 'steady' },
       { title: '곧 상영 예정인 공연', sub: '막이 오르기 전 미리 확인해보세요', g: 'soon' }
     ].map((x) => { const items = lists[x.g].map(card); return { title: x.title, sub: x.sub, items, empty: items.length === 0 }; });
-    const b1 = byId[(BOX.GGGA[0] || [])[0]], b2 = byId[(BOX.AAAA[0] || [])[0]], b3 = byId[(BOX.GGGA[1] || [])[0]];
-    const slide = (x, title) => x ? { img: IMG[x.id] || undefined, isImage: false, isPoster: true, title, sub: x.title + ' · ' + x.venue, open: () => this.openDetail(x.id) } : { img: undefined, isImage: false, isPoster: true, title, sub: '', open: () => {} };
-    const slides = [slide(b1, '이번 주 예매 1위 뮤지컬'), slide(b2, '이번 주 예매 1위 연극'), slide(b3, '지금 뜨는 뮤지컬')];
+    // 배너: Figma 카피 기준. 1) 마감 임박(종료 7일 이내) 중 예매 순위 최상위 2) 작년 오늘 수상작 3) 내 지역 예매 1위
+    const today = new Date(); const ymd = (d) => d.getFullYear() + '.' + String(d.getMonth() + 1).padStart(2, '0') + '.' + String(d.getDate()).padStart(2, '0');
+    const t0 = ymd(today), t7 = ymd(new Date(today.getTime() + 7 * 864e5));
+    const allBox = boxIds('GGGA').slice(0, 30).flatMap((id, i) => [id, boxIds('AAAA')[i]]).filter(Boolean);
+    const ending = allBox.filter((id) => byId[id].to >= t0 && byId[id].to <= t7);
+    const b1 = byId[ending[0] || allBox.filter((id) => byId[id].to >= t0).sort((a, b) => (byId[a].to < byId[b].to ? -1 : 1))[0] || allBox[0]];
+    const b3 = byId[rb.find((id) => byId[id] && id !== (b1 && b1.id)) || allBox[1]];
+    const pool = allBox.slice(0, 12).filter((id) => id !== (b1 && b1.id) && id !== (b3 && b3.id));
+    const b2 = byId[pool[today.getDate() % Math.max(1, pool.length)]];
+    const bannerDefs = [[b1, '마감 임박, 인기 공연', '종료 7일 이내, 누적 예매율 1위 공연'], [b2, '작년 오늘, 수상작', '1년 전 오늘 수상 기록을 세운 랜덤 명작'], [b3, '내 주변 실시간 1위', '위치 기반 실시간 가장 높은 예매율']];
+    const slides = bannerDefs.map(([x, title, sub], i) => ({ img: x ? IMG[x.id] : undefined, title, sub, label: title + (x ? ' · ' + x.title : ''), cls: s.banner === i ? 'on' : '', open: () => { if (x) this.openDetail(x.id); } }));
     const dots = [0, 1, 2].map((i) => ({ cls: s.banner === i ? 'on' : '', label: (i + 1) + '번째 배너', pick: () => set({ banner: i }) }));
     const homeReviews = s.reviews.slice(0, 5).map(revView);
 
@@ -1130,17 +1141,17 @@ class Component extends DCLogic {
     const results = SHOWS.filter((x) => norm(x.title).indexOf(nq) >= 0 && catOk(x, s.sCat) && inRegion(x, s.sRegion) && (!s.sDate || (x.from <= s.sDate && x.to >= s.sDate))).map(card);
     const searchCats = homeCatDefs.map(([k, l]) => ({ label: l, cls: s.sCat === k ? 'on' : '', pick: () => set({ sCat: k }) }));
     const recentChips = s.recent.map((r) => ({ label: r, removeLabel: r + ' 삭제', pick: () => set({ q: r, submitted: true, recent: [r].concat(s.recent.filter((x) => x !== r)) }), remove: () => set({ recent: s.recent.filter((x) => x !== r) }) }));
-    const topList = boxIds(s.topCat).slice(0, 10).map((id, i) => Object.assign(card(byId[id]), { rank: i + 1 }));
+    const topList = boxIds('GGGA').slice(0, 10).flatMap((id, i) => [id, boxIds('AAAA')[i]]).filter(Boolean).slice(0, 10).map((id, i) => Object.assign(card(byId[id]), { rank: i + 1 }));
     const topCats = [['GGGA', '뮤지컬'], ['AAAA', '연극']].map(([k, l]) => ({ label: l, cls: s.topCat === k ? 'on' : '', pick: () => set({ topCat: k }) }));
 
     // detail
     const base = byId[s.detailId] || SHOWS[0] || { id: '', title: '', type: '연극', status: '공연중', venue: '', period: '', fac: { amen: [], barrier: [] }, prices: [], relates: [] };
     const statusCls = { '오픈예정': 'st-soon', '공연중': 'st-on', '오픈런': 'st-open', '공연종료': 'st-end' }[base.status];
     const f = base.fac || { amen: [], barrier: [] };
-    const rows = [['공연시간', base.times], ['러닝타임', base.runtime], ['관람연령', base.age], ['출연진', base.cast], ['제작진', base.crew], ['주최·기획', base.host]].filter(([, v]) => v).map(([k, v]) => ({ k, v }));
+    const rows = [['공연시간', base.times], ['러닝타임', base.runtime], ['관람연령', base.age], ['출연배우', base.cast], ['제작진', base.crew]].filter(([, v]) => v).map(([k, v]) => ({ k, v }));
     const VBG = ['#2C2B2E', '#9A6BE3', '#709FF6', '#5E5D60'];
     const d = {
-      title: base.title, img: IMG[base.id] || undefined, type: base.type, status: base.status, statusCls,
+      title: base.title, img: IMG[base.id] || undefined, type: base.type, status: base.status, statusCls, age: base.age || '',
       venue: base.venue, period: base.period, rows,
       prices: (base.prices || []).map(([g, p]) => ({ grade: g || '가격', price: p })), noPrice: !(base.prices || []).length,
       fac: Object.assign({}, f, {
@@ -1216,7 +1227,7 @@ class Component extends DCLogic {
       // screen flags
       isSplash: s.screen === 'splash', isLogin: s.screen === 'login', loginRestCls: s.logoDone ? '' : 'pre-hide', isLoc: s.screen === 'loc', isNick: s.screen === 'nick',
       isHome: s.screen === 'home', isSearch: s.screen === 'search', isDetail: s.screen === 'detail', isWrite: s.screen === 'write', isMy: s.screen === 'my',
-      showTabbar: ['home', 'my'].indexOf(s.screen) >= 0 || (s.screen === 'search' && !(s.kbOpen && !s.sheet)),
+      showTabbar: ['home', 'my'].indexOf(s.screen) >= 0,
       showLoading: !ready && ['home', 'search', 'detail', 'write', 'my'].indexOf(s.screen) >= 0,
       loadingMsg: s.loadError || 'KOPIS 공연 정보를 불러오는 중이에요',
       fetchedAt: FETCHED, boxRange: '2026.11.11 ~ 11.17', topCats,
@@ -1286,7 +1297,7 @@ class Component extends DCLogic {
       hasRecent: s.recent.length > 0, recentChips, topList,
       emptyHint: (s.sDate || s.sRegion) ? '필터를 바꾸거나 초기화해보세요' : '다른 공연명으로 검색해보세요',
       searchCats, results, resultCount: results.length, noResults: results.length === 0,
-      sDateLabel: s.sDate ? s.sDate.slice(2).replace(/\./g, '/') : '날짜 선택', sRegionLabel: s.sRegion || '지역 선택',
+      sDateLabel: s.sDate ? s.sDate.slice(2).replace(/\./g, '/') : '날짜', sRegionLabel: s.sRegion || '지역',
       sboxCls: '', kwCls: s.qFocus ? 'on' : '', qFocusOn: () => set({ qFocus: true }), qFocusOff: () => set({ qFocus: false }),
       sDateCls: (sheetOpen && s.fTab === 'date') || s.sDate ? 'on' : '', sRegionCls: (sheetOpen && s.fTab === 'region') || s.sRegion ? 'on' : '',
       calTitle: s.calY + '년 ' + (s.calM + 1) + '월', calDays, weekNames: WEEK.map((w) => ({ label: w })), calPrev: moveCal(-1), calNext: moveCal(1),
@@ -1323,7 +1334,11 @@ class Component extends DCLogic {
       toWrite: () => set({ screen: 'write', wStars: 0, wPicks: {}, wSeat: '', wText: '' }),
       // write
       writeBack: () => set({ screen: 'detail' }),
-      wStarsList, wStarText: STAR_TEXT[s.wStars], wStarColor: s.wStars ? '#9A6BE3' : '#7C7B7E',
+      wStarsList,
+      wFillW: s.wStars ? 'calc(20px + (100% - 40px) * ' + (s.wStars - 1) / 4 + ')' : '0px',
+      wKnobL: 'calc(20px + (100% - 40px) * ' + (Math.max(1, s.wStars) - 1) / 4 + ')', wHasKnob: s.wStars > 0,
+      wDots: [1, 2, 3, 4, 5].filter((i) => i > s.wStars).map((i) => ({ left: 'calc(20px + (100% - 40px) * ' + (i - 1) / 4 + ')' })),
+      wSlide: (e) => { const r = e.currentTarget.getBoundingClientRect(); const step = (r.width - 40) / 4; const i = Math.max(0, Math.min(4, Math.round((e.clientX - r.left - 20) / step))); set({ wStars: i + 1 }); },
       wGroups, wSeat: s.wSeat, wText: s.wText, wCount: s.wText.length.toLocaleString(),
       onSeat: (e) => set({ wSeat: e.target.value }),
       onText: (e) => set({ wText: e.target.value.slice(0, 1000) }),
