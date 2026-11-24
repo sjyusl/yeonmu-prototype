@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <title>내안의연뮤 프로토타입</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="./vendor/lottie_light.min.js"></script>
 <script src="./runtime.js"></script>
 </head>
 <body>
@@ -164,8 +165,7 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 <!-- ===================== SPLASH ===================== -->
 <sc-if value="{{isSplash}}" hint-placeholder-val="{{ true }}">
 <button class="scr" onClick="{{toLogin}}" aria-label="시작하기" style="align-items: center; justify-content: center; gap: 12px">
-<img src="./assets/logo.png" alt="내안의연뮤" style="width: 169px; height: auto">
-<span style="font-size: 13px; color: #7C7B7E">연극과 뮤지컬, 더 가까이 더 깊이</span>
+<div id="splash-lottie" aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none"></div>
 </button>
 </sc-if>
 
@@ -1015,7 +1015,18 @@ class Component extends DCLogic {
   }
   componentDidMount() {
     this.loadData();
-    if (this.state.screen === 'splash') this._s = setTimeout(() => { if (this.state.screen === 'splash') this.setState({ screen: 'login' }); }, 1800);
+    if (this.state.screen === 'splash') {
+      // 스플래시: Lottie 모션(assets/splash.json)이 끝나면 로그인으로 이동
+      const go = () => { if (this.state.screen === 'splash') this.setState({ screen: 'login' }); };
+      const fallback = (ms) => { clearTimeout(this._s); this._s = setTimeout(go, ms); };
+      fallback(8000);
+      const el = document.getElementById('splash-lottie');
+      if (window.lottie && el) {
+        this._anim = window.lottie.loadAnimation({ container: el, renderer: 'svg', loop: false, autoplay: true, path: './assets/splash.json', rendererSettings: { preserveAspectRatio: 'xMidYMid meet' } });
+        this._anim.addEventListener('complete', go);
+        this._anim.addEventListener('data_failed', () => fallback(1800));
+      } else fallback(1800);
+    }
     this.startBanner();
   }
   componentDidUpdate(pp) {
@@ -1025,7 +1036,7 @@ class Component extends DCLogic {
     }
     if (pp.startScreen !== this.props.startScreen && this.props.startScreen) this.setState({ screen: this.props.startScreen });
   }
-  componentWillUnmount() { clearTimeout(this._s); clearInterval(this._b); clearTimeout(this._t); }
+  componentWillUnmount() { if (this._anim) this._anim.destroy(); clearTimeout(this._s); clearInterval(this._b); clearTimeout(this._t); }
   showToast(msg) {
     clearTimeout(this._t);
     this.setState({ toast: msg });
