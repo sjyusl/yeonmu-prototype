@@ -38,7 +38,9 @@ body{margin:0;background:#fff}
   :root{--sb:env(safe-area-inset-top,0px);--hb:calc(16px + env(safe-area-inset-bottom,0px));--hb34:calc(16px + env(safe-area-inset-bottom,0px));--tbb:calc(8px + env(safe-area-inset-bottom,0px))}
 }
 /* 웹 버전: 앱 화면을 브라우저 가운데에 배치 */
-body{display:flex;justify-content:center;align-items:center;min-height:100vh}
+body{display:flex;justify-content:center;align-items:center;min-height:100vh;min-height:100dvh}
+/* 어떤 화면에서 열어도 세로를 꽉 채움 (100dvh 미지원 브라우저는 100vh) */
+@supports not (height: 100dvh){.app{height:100vh !important}}
 /* 웹에서 스크롤바 숨김 (스크롤 동작은 유지) */
 html,body{overflow:hidden}
 html,body,.app,.app *{scrollbar-width:none;-ms-overflow-style:none}
@@ -166,7 +168,7 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 .pbadge{position:absolute;left:6px;top:6px;width:24px;height:24px;border-radius:12px;background:rgba(255,255,255,.92);border:1px solid #D7A6FF;color:#9A6BE3;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center}
 </style>
 </helmet>
-<div class="app" style="width: 393px; height: min(852px, 100vh); position: relative; overflow: hidden; background: #ffffff; font-family: 'Pretendard Variable', Pretendard, -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #272727">
+<div class="app" style="width: 393px; height: 100dvh; position: relative; overflow: hidden; background: #ffffff; font-family: 'Pretendard Variable', Pretendard, -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #272727">
 
 <!-- ===================== LOGIN ===================== -->
 <sc-if value="{{isLogin}}" hint-placeholder-val="{{ false }}">
