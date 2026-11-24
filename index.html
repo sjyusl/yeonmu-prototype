@@ -33,9 +33,11 @@
 .t-caption-lg{font-size:13px;font-weight:500;line-height:1.4}
 .t-caption-md{font-size:12px;font-weight:400;line-height:1.4}
 body{margin:0;background:#fff}
-/* 웹 버전: 실제 폰 브라우저에서는 목업용 상태바(54px)·홈바(44/34px) 여백을 제거 */
+/* 웹 버전: 실제 기기(폰·태블릿 등 터치 기기) 브라우저에서는 목업용 상태바(54px)·홈바(44/34px) 여백을 제거 */
 @media (max-width: 500px) and (pointer: coarse){
   .app{width:100vw !important}
+}
+@media (pointer: coarse){
   :root{--sb:env(safe-area-inset-top,0px);--hb:calc(16px + env(safe-area-inset-bottom,0px));--hb34:calc(16px + env(safe-area-inset-bottom,0px));--tbb:calc(8px + env(safe-area-inset-bottom,0px))}
 }
 /* 웹 버전: 앱 화면을 브라우저 가운데에 배치 */
