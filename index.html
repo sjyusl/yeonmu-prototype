@@ -19,6 +19,7 @@
   --text-primary:#272727;--text-tertiary:#7C7B7E;--text-brand:#9A6BE3;
   --border-selection:#B086F0;--border-divider:#D6D5D8;
   --status-danger:#FA6363;--blue-500:#709FF6;--yellow-500:#FFCA42;
+  --sb:54px;--hb:44px;--hb34:34px;--tbb:24px;
   --fx-brand:0 0 12px rgba(176,134,240,.36);--fx-top:0 -4px 4px rgba(0,0,0,.04);--fx-bottom:0 4px 4px rgba(0,0,0,.04);
 }
 /* ui-font 텍스트 스타일 */
@@ -32,6 +33,10 @@
 .t-caption-lg{font-size:13px;font-weight:500;line-height:1.4}
 .t-caption-md{font-size:12px;font-weight:400;line-height:1.4}
 body{margin:0;background:#fff}
+/* 웹 버전: 실제 폰 브라우저에서는 목업용 상태바(54px)·홈바(44/34px) 여백을 제거 */
+@media (max-width: 500px) and (pointer: coarse){
+  :root{--sb:env(safe-area-inset-top,0px);--hb:calc(16px + env(safe-area-inset-bottom,0px));--hb34:calc(16px + env(safe-area-inset-bottom,0px));--tbb:calc(8px + env(safe-area-inset-bottom,0px))}
+}
 /* 웹 버전: 앱 화면을 브라우저 가운데에 배치 */
 body{display:flex;justify-content:center;align-items:center;min-height:100vh}
 /* 웹에서 스크롤바 숨김 (스크롤 동작은 유지) */
@@ -44,6 +49,7 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 :where(.app) :where(button){font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-align:inherit;letter-spacing:inherit}
 :where(.app) :where(input,textarea){font:inherit;letter-spacing:inherit}
 :where(.app) :where(img){display:block}
+.pre-hide{visibility:hidden}
 .scr{position:absolute;inset:0;display:flex;flex-direction:column;background:#fff}
 .scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;scroll-behavior:smooth;position:relative}
 .scroll::-webkit-scrollbar{display:none}
@@ -82,7 +88,7 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 .utab{flex:1;height:48px;display:flex !important;align-items:center;justify-content:center;font-size:16px;font-weight:400;line-height:1;color:#7C7B7E;border-bottom:2px solid #EAE9EC !important;text-decoration:none}
 .utab.on{color:#9A6BE3;border-color:#B086F0 !important;font-weight:600}
 .utab:hover{color:#9A6BE3}
-.tabbar{position:absolute;left:0;right:0;bottom:0;height:88px;background:#fff;border-radius:24px 24px 0 0;box-shadow:var(--fx-top);display:flex;justify-content:space-around;padding:8px 24px 0;z-index:20}
+.tabbar{position:absolute;left:0;right:0;bottom:0;height:calc(64px + var(--tbb));background:#fff;border-radius:24px 24px 0 0;box-shadow:var(--fx-top);display:flex;justify-content:space-around;padding:8px 24px 0;z-index:20}
 .tab{width:96px;height:56px;border-radius:16px;display:flex !important;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:12px;font-weight:400;line-height:1.4;color:#5E5D60}
 .tab.on{background:#F7EFFF;color:#9A6BE3;font-weight:600}
 .divider{height:8px;background:#F8F7F9}
@@ -93,7 +99,7 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 .chk svg{color:#B086F0}
 .review{border:1px solid #EAE9EC !important;border-radius:12px;padding:16px !important;background:#fff;display:flex !important;flex-direction:column;gap:10px;width:100%}
 .overlay{position:absolute;inset:0;background:rgba(20,18,26,.45);z-index:50;display:flex;flex-direction:column;justify-content:flex-end}
-.sheet{background:#fff;border-radius:24px 24px 0 0;padding:12px 20px 34px}
+.sheet{background:#fff;border-radius:24px 24px 0 0;padding:12px 20px var(--hb34)}
 .grab{width:40px;height:4px;border-radius:2px;background:#D6D5D8;margin:0 auto 16px}
 .modal-wrap{position:absolute;inset:0;background:rgba(20,18,26,.45);z-index:60;display:flex;align-items:center;justify-content:center;padding:0 32px}
 .modal{background:#fff;border-radius:20px;padding:28px 20px 20px;width:100%;text-align:center}
@@ -106,7 +112,7 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 .slide{width:393px;height:100%;position:relative;overflow:hidden;flex:none;display:block !important}
 .dot{width:8px;height:8px;border-radius:4px;background:rgba(255,255,255,.55);transition:width .3s}
 .dot.on{width:20px;background:#fff}
-.hdr{position:absolute;top:0;left:0;right:0;height:108px;padding:54px 8px 0 24px;z-index:10;display:flex;align-items:center;justify-content:space-between;transition:background .2s}
+.hdr{position:absolute;top:0;left:0;right:0;height:calc(54px + var(--sb));padding:var(--sb) 8px 0 24px;z-index:10;display:flex;align-items:center;justify-content:space-between;transition:background .2s}
 .hdr.solid{background:#fff;box-shadow:var(--fx-bottom)}
 .hdr .logo{width:120px;height:auto;filter:brightness(0) invert(1)}
 .hdr.solid .logo{filter:none}
@@ -164,16 +170,16 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 
 <!-- ===================== LOGIN ===================== -->
 <sc-if value="{{isLogin}}" hint-placeholder-val="{{ false }}">
-<div class="scr scr-in" style="padding: 0 20px 44px">
+<div class="scr scr-in" style="padding: 0 20px var(--hb)">
 <!-- 로고 모션(assets/splash.json): 1080×1920 모션을 축소해 마지막 프레임의 로고가 아래 로고 자리(169×30, x112·y196)에 오도록 배치. 재생 후 마지막 프레임에서 멈춤 -->
-<div id="login-motion" aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 0 0; transform: translate(105.386px, 48.62px) scale(0.16869); pointer-events: none"></div>
-<div style="flex: 1; display: flex; flex-direction: column; align-items: center; padding-top: 196px">
+<div id="login-motion" aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 0 0; transform: translate(105.386px, calc(var(--sb) - 5.38px)) scale(0.16869); pointer-events: none"></div>
+<div style="flex: 1; display: flex; flex-direction: column; align-items: center; padding-top: calc(142px + var(--sb))">
 <div role="img" aria-label="내안의연뮤, 연극과 뮤지컬 더 가까이 더 깊이" style="width: 169px; height: 30px"></div>
 <p aria-hidden="true" style="margin: 12px 0 0; font-size: 13px; color: #7C7B7E; visibility: hidden">연극과 뮤지컬, 더 가까이 더 깊이</p>
-<h1 style="margin: 52px 0 0; font-size: 24px; line-height: 1.4; font-weight: 700; color: #2C2B2E; text-align: center">나만의 공연 취향을<br>발견하고 기록해요</h1>
+<h1 class="{{loginRestCls}}" style="margin: 52px 0 0; font-size: 24px; line-height: 1.4; font-weight: 700; color: #2C2B2E; text-align: center">나만의 공연 취향을<br>발견하고 기록해요</h1>
 </div>
-<p style="margin: 0 0 12px; font-size: 13px; color: #5E5D60; text-align: center">로그인/회원가입</p>
-<div style="display: flex; flex-direction: column; gap: 10px">
+<p class="{{loginRestCls}}" style="margin: 0 0 12px; font-size: 13px; color: #5E5D60; text-align: center">로그인/회원가입</p>
+<div class="{{loginRestCls}}" style="display: flex; flex-direction: column; gap: 10px">
 <button class="btn" onClick="{{toLoc}}" style="background: #ffffff; border: 1.5px solid #EAE9EC; color: #403F42">
 <svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>
 Google로 시작하기</button>
@@ -189,7 +195,7 @@ Apple로 시작하기</button>
 
 <!-- ===================== ONBOARDING: LOCATION ===================== -->
 <sc-if value="{{isLoc}}" hint-placeholder-val="{{ false }}">
-<div class="scr scr-in" style="padding-top: 54px">
+<div class="scr scr-in" style="padding-top: var(--sb)">
 <div class="nav" style="box-shadow: 0 1px 0 #EAE9EC">
 <button class="iconbtn" onClick="{{toLogin}}" aria-label="뒤로가기"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
 </div>
@@ -206,7 +212,7 @@ Apple로 시작하기</button>
 </sc-for>
 </div>
 </div>
-<div style="padding: 0 20px 44px; flex: none">
+<div style="padding: 0 20px var(--hb); flex: none">
 <button class="btn btn-primary" onClick="{{toNick}}" disabled="{{locDisabled}}">다음으로</button>
 </div>
 </div>
@@ -214,7 +220,7 @@ Apple로 시작하기</button>
 
 <!-- ===================== ONBOARDING: NICKNAME ===================== -->
 <sc-if value="{{isNick}}" hint-placeholder-val="{{ false }}">
-<div class="scr scr-in" style="padding-top: 54px">
+<div class="scr scr-in" style="padding-top: var(--sb)">
 <div class="nav" style="box-shadow: 0 1px 0 #EAE9EC">
 <button class="iconbtn" onClick="{{toLoc}}" aria-label="뒤로가기"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
 </div>
@@ -240,7 +246,7 @@ Apple로 시작하기</button>
 </sc-if>
 </div>
 <div style="flex: 1"></div>
-<div style="padding: 0 20px 44px">
+<div style="padding: 0 20px var(--hb)">
 <button class="btn btn-primary" onClick="{{finishOnboarding}}" disabled="{{nickDisabled}}">시작하기</button>
 </div>
 </div>
@@ -256,7 +262,7 @@ Apple로 시작하기</button>
 <span style="position: absolute; top: 10px; right: 11px; width: 7px; height: 7px; border-radius: 4px; background: #FA6363"></span>
 </button>
 </div>
-<div class="scroll" onScroll="{{onHomeScroll}}" style="padding-bottom: 96px">
+<div class="scroll" onScroll="{{onHomeScroll}}" style="padding-bottom: calc(72px + var(--tbb))">
 
 <!-- Banner -->
 <div class="bnr" onPointerDown="{{bnDown}}" onPointerMove="{{bnMove}}" onPointerUp="{{bnUp}}" onPointerCancel="{{bnUp}}" onClickCapture="{{bnClick}}" style="height: 540px; position: relative; overflow: hidden; background: #6E5A9E">
@@ -315,7 +321,7 @@ Apple로 시작하기</button>
 </div>
 
 <!-- Category tabs -->
-<div style="display: flex; position: sticky; top: 108px; z-index: 5; background: #ffffff">
+<div style="display: flex; position: sticky; top: calc(54px + var(--sb)); z-index: 5; background: #ffffff">
 <sc-for list="{{homeCats}}" as="c" hint-placeholder-count="3">
 <button class="cat {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button>
 </sc-for>
@@ -378,7 +384,7 @@ Apple로 시작하기</button>
 
 <!-- ===================== SEARCH ===================== -->
 <sc-if value="{{isSearch}}" hint-placeholder-val="{{ false }}">
-<div class="scr scr-in" style="padding-top: 54px">
+<div class="scr scr-in" style="padding-top: var(--sb)">
 <sc-if value="{{searchIdle}}" hint-placeholder-val="{{ true }}">
 <div class="nav">
 <button class="iconbtn" onClick="{{toHome}}" aria-label="뒤로가기"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
@@ -399,7 +405,7 @@ Apple로 시작하기</button>
 </div>
 </div>
 <div class="divider"></div>
-<div class="scroll" onClick="{{kbHide}}" style="padding-bottom: 100px">
+<div class="scroll" onClick="{{kbHide}}" style="padding-bottom: calc(76px + var(--tbb))">
 <sc-if value="{{hasRecent}}" hint-placeholder-val="{{ true }}">
 <div style="padding: 24px 0 8px">
 <h2 style="margin: 0 24px 12px; font-size: 16px; font-weight: 700; line-height: 1.2">최근 검색어</h2>
@@ -482,14 +488,14 @@ Apple로 시작하기</button>
 <!-- ===================== DETAIL ===================== -->
 <sc-if value="{{isDetail}}" hint-placeholder-val="{{ false }}">
 <div class="scr scr-in">
-<div style="height: 108px; padding-top: 54px; flex: none; background: #ffffff; z-index: 6">
+<div style="height: calc(54px + var(--sb)); padding-top: var(--sb); flex: none; background: #ffffff; z-index: 6">
 <div class="nav">
 <button class="iconbtn" onClick="{{detailBack}}" aria-label="뒤로가기"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
 <span class="navtitle ellip1" style="padding: 0 8px">{{d.title}}</span>
 <button class="iconbtn" onClick="{{toggleWish}}" aria-label="{{wishLabel}}" aria-pressed="{{wished}}" style="color: {{heartColor}}"><svg width="24" height="24" viewBox="0 0 24 24" fill="{{heartFill}}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
 </div>
 </div>
-<div class="scroll" onScroll="{{onDetailScroll}}" style="padding-bottom: 110px">
+<div class="scroll" onScroll="{{onDetailScroll}}" style="padding-bottom: calc(76px + var(--hb34))">
 <div style="height: 410px; position: relative; overflow: hidden; background: #2C2B2E">
 <img src="{{d.img}}" alt="" style="position: absolute; inset: -40px; width: calc(100% + 80px); height: calc(100% + 80px); object-fit: cover; filter: blur(24px) saturate(1.1); opacity: .9">
 <div style="position: absolute; inset: 0; background: rgba(0,0,0,.12)"></div>
@@ -632,7 +638,7 @@ Apple로 시작하기</button>
 <p style="margin: 0; font-size: 12px; line-height: 1.4; color: #7C7B7E; text-align: center">공연정보 출처<br>(재)예술경영지원센터 공연예술통합전산망</p>
 </div>
 </div>
-<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 20px 24px 34px; background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #ffffff 35%); z-index: 8">
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 20px 24px var(--hb34); background: linear-gradient(180deg, rgba(255,255,255,0) 0%, #ffffff 35%); z-index: 8">
 <button class="btn btn-primary" onClick="{{toWrite}}" disabled="{{writeLocked}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>{{writeLabel}}</button>
 </div>
 </div>
@@ -640,13 +646,13 @@ Apple로 시작하기</button>
 
 <!-- ===================== WRITE REVIEW ===================== -->
 <sc-if value="{{isWrite}}" hint-placeholder-val="{{ false }}">
-<div class="scr scr-in" style="padding-top: 54px; background: #ffffff">
+<div class="scr scr-in" style="padding-top: var(--sb); background: #ffffff">
 <div class="nav" style="box-shadow: 0 1px 0 #EAE9EC">
 <button class="iconbtn" onClick="{{writeBack}}" aria-label="뒤로가기"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
 <span class="navtitle">관람후기 작성</span>
 <span style="width: 44px"></span>
 </div>
-<div class="scroll" style="padding-bottom: 110px">
+<div class="scroll" style="padding-bottom: calc(76px + var(--hb34))">
 <div style="display: flex; gap: 14px; padding: 16px 24px; background: #F8F7F9">
 <img src="{{d.img}}" alt="{{d.title}} 포스터" style="width: 72px; height: 96px; object-fit: cover; border-radius: 4px">
 <div style="flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; padding-top: 2px">
@@ -686,7 +692,7 @@ Apple로 시작하기</button>
 </div>
 </div>
 </div>
-<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 16px 24px 34px; background: #ffffff; box-shadow: var(--fx-top)">
+<div style="position: absolute; left: 0; right: 0; bottom: 0; padding: 16px 24px var(--hb34); background: #ffffff; box-shadow: var(--fx-top)">
 <button class="btn btn-primary" onClick="{{submitReview}}" disabled="{{wDisabled}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>작성 완료</button>
 </div>
 </div>
@@ -695,8 +701,8 @@ Apple로 시작하기</button>
 <!-- ===================== MY ===================== -->
 <sc-if value="{{isMy}}" hint-placeholder-val="{{ false }}">
 <div class="scr">
-<div class="scroll" style="padding-bottom: 100px; background: linear-gradient(160deg, #E0A9FF 0%, #B79BF6 45%, #98A3F7 100%)">
-<div style="padding: 54px 8px 0; display: flex; justify-content: flex-end">
+<div class="scroll" style="padding-bottom: calc(76px + var(--tbb)); background: linear-gradient(160deg, #E0A9FF 0%, #B79BF6 45%, #98A3F7 100%)">
+<div style="padding: var(--sb) 8px 0; display: flex; justify-content: flex-end">
 <button class="iconbtn" onClick="{{openSettings}}" aria-label="설정" style="color: #ffffff"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></button>
 </div>
 <div style="display: flex; align-items: center; gap: 22px; padding: 6px 24px 0">
@@ -816,7 +822,7 @@ Apple로 시작하기</button>
 <sc-if value="{{sheetFilter}}" hint-placeholder-val="{{ false }}">
 <div class="overlay">
 <button onClick="{{closeSheet}}" aria-label="닫기" style="flex: 1"></button>
-<div class="sheet" style="padding-bottom: 34px">
+<div class="sheet" style="padding-bottom: var(--hb34)">
 <div class="grab"></div>
 <div style="display: flex; gap: 16px; margin-bottom: 20px">
 <button onClick="{{fTabDate}}" style="font-size: 16px; font-weight: 700; padding-bottom: 6px; color: {{fDateColor}}; border-bottom: 2px solid {{fDateLine}}">날짜</button>
@@ -976,7 +982,7 @@ class Component extends DCLogic {
     super(props);
     const start = (props.startScreen && props.startScreen !== 'splash') ? props.startScreen : 'login';
     this.state = {
-      screen: start, prev: 'home', region: '', nick: '', nickFinal: '',
+      screen: start, logoDone: start !== 'login', prev: 'home', region: '', nick: '', nickFinal: '',
       homeCat: 'all', banner: 0, scrolled: false, sheet: null, fTab: 'region',
       qFocus: false, calY: new Date().getFullYear(), calM: new Date().getMonth(), q: '', submitted: false, kbOpen: false, kbShift: false, kbNum: false, recent: ['시카고', '해밀턴', '러브레터'],
       sDate: '', sRegion: '', fDate: '', fRegion: '', sCat: 'all',
@@ -1016,11 +1022,16 @@ class Component extends DCLogic {
   mountLogo(play) {
     // 로그인 화면 로고 모션: 앱을 처음 열 때 한 번 재생하고 마지막 프레임에서 멈춤. 다시 돌아오면 멈춘 상태로 표시
     const el = typeof document !== 'undefined' && document.getElementById('login-motion');
-    if (!el || el === this._logoEl || !window.lottie) return;
+    if (!el || el === this._logoEl) return;
+    if (!window.lottie) { if (!this.state.logoDone) this.setState({ logoDone: true }); return; }
     if (this._anim) this._anim.destroy();
     this._logoEl = el;
     const anim = window.lottie.loadAnimation({ container: el, renderer: 'svg', loop: false, autoplay: false, path: './assets/splash.json', rendererSettings: { preserveAspectRatio: 'xMidYMid meet' } });
-    anim.addEventListener('DOMLoaded', () => { if (play && !this._logoPlayed) { this._logoPlayed = true; anim.play(); } else anim.goToAndStop(anim.totalFrames - 1, true); });
+    const done = () => { if (!this.state.logoDone) this.setState({ logoDone: true }); };
+    anim.addEventListener('DOMLoaded', () => { if (play && !this._logoPlayed) { this._logoPlayed = true; anim.play(); } else { anim.goToAndStop(anim.totalFrames - 1, true); done(); } });
+    anim.addEventListener('complete', done);
+    anim.addEventListener('data_failed', done);
+    clearTimeout(this._s); this._s = setTimeout(done, 9000);
     this._anim = anim;
   }
   componentDidUpdate(pp) {
@@ -1201,7 +1212,7 @@ class Component extends DCLogic {
 
     return {
       // screen flags
-      isSplash: s.screen === 'splash', isLogin: s.screen === 'login', isLoc: s.screen === 'loc', isNick: s.screen === 'nick',
+      isSplash: s.screen === 'splash', isLogin: s.screen === 'login', loginRestCls: s.logoDone ? '' : 'pre-hide', isLoc: s.screen === 'loc', isNick: s.screen === 'nick',
       isHome: s.screen === 'home', isSearch: s.screen === 'search', isDetail: s.screen === 'detail', isWrite: s.screen === 'write', isMy: s.screen === 'my',
       showTabbar: ['home', 'my'].indexOf(s.screen) >= 0 || (s.screen === 'search' && !(s.kbOpen && !s.sheet)),
       showLoading: !ready && ['home', 'search', 'detail', 'write', 'my'].indexOf(s.screen) >= 0,
