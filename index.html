@@ -55,10 +55,10 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 :where(.app) :where(input,textarea){font:inherit;letter-spacing:inherit}
 :where(.app) :where(img){display:block}
 /* 스플래시: 모션 최종 로고+슬로건 묶음의 시각적 중심(모션 좌표 기준 y≈174px)을 화면 정중앙에 배치 → 끝나면 로그인 로고 자리로 올라감 */
-.lm-wrap{position:absolute;inset:0;pointer-events:none;transform:translateY(0);transition:transform .7s cubic-bezier(.85,0,.15,1)} /* 쫀득한 ease-in-out (expo 계열) */
+.lm-wrap{position:absolute;inset:0;pointer-events:none;transform:translateY(0);transition:transform .9s cubic-bezier(.76,0,.24,1)} /* 쫀득하되 조금 여유 있게 (ease-in-out quart) */
 .lm-wrap.center{transform:translateY(calc(50% - var(--sb) - 174px))}
 .pre-hide{opacity:0;pointer-events:none}
-.login-rest{transition:opacity .4s ease .7s} /* 로고가 다 올라간 뒤(0.7s) 페이드인 → 겹침 없음 */
+.login-rest{transition:opacity .6s ease .85s} /* 로고가 거의 자리 잡은 뒤(0.85s) 천천히 페이드인 */
 .scr{position:absolute;inset:0;display:flex;flex-direction:column;background:#fff}
 .scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;scroll-behavior:smooth;position:relative}
 .scroll::-webkit-scrollbar{display:none}
@@ -1043,8 +1043,8 @@ class Component extends DCLogic {
     const done = () => { if (!this.state.logoDone) this.setState({ logoDone: true }); };
     anim.addEventListener('DOMLoaded', () => { if (play && !this._logoPlayed) { this._logoPlayed = true; anim.play(); } else { anim.goToAndStop(anim.totalFrames - 1, true); done(); } });
     anim.addEventListener('complete', done);
-    // 슬로건 등장이 끝나는 130프레임(약 4.3초)에서 바로 올라가기 시작 (뒤의 정지 구간을 기다리지 않음)
-    anim.addEventListener('enterFrame', (ev) => { if (ev.currentTime >= 130) done(); });
+    // 슬로건 등장(130프레임) 후 잠깐(약 0.3초) 머문 뒤 140프레임에서 올라가기 시작
+    anim.addEventListener('enterFrame', (ev) => { if (ev.currentTime >= 140) done(); });
     anim.addEventListener('data_failed', done);
     clearTimeout(this._s); this._s = setTimeout(done, 9000);
     this._anim = anim;
