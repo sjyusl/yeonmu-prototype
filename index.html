@@ -165,7 +165,8 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 <!-- ===================== SPLASH ===================== -->
 <sc-if value="{{isSplash}}" hint-placeholder-val="{{ true }}">
 <button class="scr" onClick="{{toLogin}}" aria-label="시작하기" style="align-items: center; justify-content: center; gap: 12px">
-<div id="splash-lottie" aria-hidden="true" style="position: absolute; inset: 0; pointer-events: none"></div>
+<!-- 1080×1920 모션을 축소: 마지막 프레임의 로고가 로그인 화면 로고(169×30, x112·y196)와 같은 위치·크기 -->
+<div id="splash-lottie" aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 0 0; transform: translate(105.386px, 48.62px) scale(0.16869); pointer-events: none"></div>
 </button>
 </sc-if>
 
