@@ -198,6 +198,7 @@ Apple로 시작하기</button>
 <div class="nav" style="box-shadow: 0 1px 0 #EAE9EC">
 <button class="iconbtn" onClick="{{toLogin}}" aria-label="뒤로가기"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
 </div>
+<div class="scroll" style="padding-bottom: 24px">
 <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 32px">
 <span style="width: 24px; height: 24px; border-radius: 12px; background: #B086F0; color: #ffffff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center">1</span>
 <span style="width: 10px; height: 10px; border-radius: 5px; background: #EAE9EC"></span>
@@ -209,8 +210,8 @@ Apple로 시작하기</button>
 <button class="pill {{r.cls}}" onClick="{{r.pick}}" style="height: 52px; border-radius: 26px">{{r.label}}</button>
 </sc-for>
 </div>
-<div style="flex: 1"></div>
-<div style="padding: 0 20px 44px">
+</div>
+<div style="padding: 0 20px 44px; flex: none">
 <button class="btn btn-primary" onClick="{{toNick}}" disabled="{{locDisabled}}">다음으로</button>
 </div>
 </div>
