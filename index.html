@@ -55,10 +55,10 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 :where(.app) :where(input,textarea){font:inherit;letter-spacing:inherit}
 :where(.app) :where(img){display:block}
 /* 스플래시: 모션 최종 로고+슬로건 묶음의 시각적 중심(모션 좌표 기준 y≈174px)을 화면 정중앙에 배치 → 끝나면 로그인 로고 자리로 올라감 */
-.lm-wrap{position:absolute;inset:0;pointer-events:none;transform:translateY(0);transition:transform .6s cubic-bezier(.33,0,.2,1)}
+.lm-wrap{position:absolute;inset:0;pointer-events:none;transform:translateY(0);transition:transform .7s cubic-bezier(.85,0,.15,1)} /* 쫀득한 ease-in-out (expo 계열) */
 .lm-wrap.center{transform:translateY(calc(50% - var(--sb) - 174px))}
 .pre-hide{opacity:0;pointer-events:none}
-.login-rest{transition:opacity .4s ease .6s} /* 로고가 다 올라간 뒤(0.6s) 페이드인 → 겹침 없음 */
+.login-rest{transition:opacity .4s ease .7s} /* 로고가 다 올라간 뒤(0.7s) 페이드인 → 겹침 없음 */
 .scr{position:absolute;inset:0;display:flex;flex-direction:column;background:#fff}
 .scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;scroll-behavior:smooth;position:relative}
 .scroll::-webkit-scrollbar{display:none}
