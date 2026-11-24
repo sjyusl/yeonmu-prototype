@@ -162,20 +162,14 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 </helmet>
 <div class="app" style="width: 393px; height: min(852px, 100vh); position: relative; overflow: hidden; background: #ffffff; font-family: 'Pretendard Variable', Pretendard, -apple-system, 'Apple SD Gothic Neo', sans-serif; color: #272727">
 
-<!-- ===================== SPLASH ===================== -->
-<sc-if value="{{isSplash}}" hint-placeholder-val="{{ true }}">
-<button class="scr" onClick="{{toLogin}}" aria-label="시작하기" style="align-items: center; justify-content: center; gap: 12px">
-<!-- 1080×1920 모션을 축소: 마지막 프레임의 로고가 로그인 화면 로고(169×30, x112·y196)와 같은 위치·크기 -->
-<div id="splash-lottie" aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 0 0; transform: translate(105.386px, 48.62px) scale(0.16869); pointer-events: none"></div>
-</button>
-</sc-if>
-
 <!-- ===================== LOGIN ===================== -->
 <sc-if value="{{isLogin}}" hint-placeholder-val="{{ false }}">
 <div class="scr scr-in" style="padding: 0 20px 44px">
+<!-- 로고 모션(assets/splash.json): 1080×1920 모션을 축소해 마지막 프레임의 로고가 아래 로고 자리(169×30, x112·y196)에 오도록 배치. 재생 후 마지막 프레임에서 멈춤 -->
+<div id="login-motion" aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 0 0; transform: translate(105.386px, 48.62px) scale(0.16869); pointer-events: none"></div>
 <div style="flex: 1; display: flex; flex-direction: column; align-items: center; padding-top: 196px">
-<img src="./assets/logo.png" alt="내안의연뮤" style="width: 169px; height: auto">
-<p style="margin: 12px 0 0; font-size: 13px; color: #7C7B7E">연극과 뮤지컬, 더 가까이 더 깊이</p>
+<div role="img" aria-label="내안의연뮤, 연극과 뮤지컬 더 가까이 더 깊이" style="width: 169px; height: 30px"></div>
+<p aria-hidden="true" style="margin: 12px 0 0; font-size: 13px; color: #7C7B7E; visibility: hidden">연극과 뮤지컬, 더 가까이 더 깊이</p>
 <h1 style="margin: 52px 0 0; font-size: 24px; line-height: 1.4; font-weight: 700; color: #2C2B2E; text-align: center">나만의 공연 취향을<br>발견하고 기록해요</h1>
 </div>
 <p style="margin: 0 0 12px; font-size: 13px; color: #5E5D60; text-align: center">로그인/회원가입</p>
@@ -898,7 +892,7 @@ Apple로 시작하기</button>
 </sc-if>
 </div>
 </template>
-<script type="text/x-dc" data-dc-script data-props='{"startScreen":{"editor":"enum","options":["splash","login","home","search","detail","write","my"],"default":"splash"},"$preview":{"width":393,"height":852}}'>
+<script type="text/x-dc" data-dc-script data-props='{"startScreen":{"editor":"enum","options":["login","home","search","detail","write","my"],"default":"login"},"$preview":{"width":393,"height":852}}'>
 // ===== KOPIS 공연예술통합전산망 OpenAPI 데이터 (수집본) =====
 const META_URL = './assets/meta.json';
 const IMAGES_URL = './assets/images.json';
@@ -980,7 +974,7 @@ const SAMPLE_TEXTS = [
 class Component extends DCLogic {
   constructor(props) {
     super(props);
-    const start = props.startScreen ?? 'splash';
+    const start = (props.startScreen && props.startScreen !== 'splash') ? props.startScreen : 'login';
     this.state = {
       screen: start, prev: 'home', region: '', nick: '', nickFinal: '',
       homeCat: 'all', banner: 0, scrolled: false, sheet: null, fTab: 'region',
@@ -1016,21 +1010,21 @@ class Component extends DCLogic {
   }
   componentDidMount() {
     this.loadData();
-    if (this.state.screen === 'splash') {
-      // 스플래시: Lottie 모션(assets/splash.json)이 끝나면 로그인으로 이동
-      const go = () => { if (this.state.screen === 'splash') this.setState({ screen: 'login' }); };
-      const fallback = (ms) => { clearTimeout(this._s); this._s = setTimeout(go, ms); };
-      fallback(8000);
-      const el = document.getElementById('splash-lottie');
-      if (window.lottie && el) {
-        this._anim = window.lottie.loadAnimation({ container: el, renderer: 'svg', loop: false, autoplay: true, path: './assets/splash.json', rendererSettings: { preserveAspectRatio: 'xMidYMid meet' } });
-        this._anim.addEventListener('complete', go);
-        this._anim.addEventListener('data_failed', () => fallback(1800));
-      } else fallback(1800);
-    }
+    this.mountLogo(true);
     this.startBanner();
   }
+  mountLogo(play) {
+    // 로그인 화면 로고 모션: 앱을 처음 열 때 한 번 재생하고 마지막 프레임에서 멈춤. 다시 돌아오면 멈춘 상태로 표시
+    const el = typeof document !== 'undefined' && document.getElementById('login-motion');
+    if (!el || el === this._logoEl || !window.lottie) return;
+    if (this._anim) this._anim.destroy();
+    this._logoEl = el;
+    const anim = window.lottie.loadAnimation({ container: el, renderer: 'svg', loop: false, autoplay: false, path: './assets/splash.json', rendererSettings: { preserveAspectRatio: 'xMidYMid meet' } });
+    anim.addEventListener('DOMLoaded', () => { if (play && !this._logoPlayed) { this._logoPlayed = true; anim.play(); } else anim.goToAndStop(anim.totalFrames - 1, true); });
+    this._anim = anim;
+  }
   componentDidUpdate(pp) {
+    if (this.state.screen === 'login') this.mountLogo(false); else this._logoEl = null;
     if (this._scrollReview && this.state.screen === 'detail') {
       this._scrollReview = false;
       setTimeout(() => { const n = document.getElementById('d-review'); if (n) n.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 60);
