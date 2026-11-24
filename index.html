@@ -92,8 +92,8 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 .stars .f{color:#FFCA42}.stars .e{color:#D6D5D8}
 .pill{height:40px;border-radius:20px;background:#EAE9EC;color:#5E5D60;font-size:16px;font-weight:400;line-height:1;display:flex !important;align-items:center;justify-content:center;border:1.5px solid transparent !important;padding:0 16px !important;text-align:center !important}
 .pill.on{background:#F7EFFF;border-color:#B086F0 !important;color:#9A6BE3;font-weight:600}
-.cat{flex:1;height:46px;display:flex !important;align-items:center;justify-content:center;font-size:16px;font-weight:400;line-height:1;color:#7C7B7E;border-bottom:1px solid #EAE9EC !important}
-.cat.on{background:#B086F0;color:#fff;border-color:#B086F0 !important;font-weight:600}
+.cat{flex:1;height:46px;display:flex !important;align-items:center;justify-content:center;font-size:18px;font-weight:700;line-height:1;color:#919193;background:#fff;border-bottom:2px solid #E7E7E7 !important}
+.cat.on{background:#B086F0;color:#fff;border-color:#9A6BE3 !important}
 .utab{flex:1;height:48px;display:flex !important;align-items:center;justify-content:center;font-size:16px;font-weight:400;line-height:1;color:#7C7B7E;border-bottom:2px solid #EAE9EC !important;text-decoration:none}
 .utab.on{color:#9A6BE3;border-color:#B086F0 !important;font-weight:600}
 .utab.auto{flex:none;padding:0 12px;margin-bottom:-1px;border-bottom-color:transparent !important}
@@ -103,6 +103,14 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 .tab{width:96px;height:56px;border-radius:16px;display:flex !important;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:12px;font-weight:400;line-height:1.4;color:#5E5D60}
 .tab.on{background:#F7EFFF;color:#9A6BE3;font-weight:600}
 .divider{height:8px;background:#F8F7F9}
+/* top-nav 공통 (type=title / search / search-filter) */
+.tnav{flex:none;position:relative;z-index:6;background:#fff;padding:calc(12px + var(--sb)) 24px 12px;display:flex;flex-direction:column;gap:12px}
+.tnav.clear{background:transparent}
+.tnav-row{height:24px;display:flex;align-items:center;justify-content:space-between;position:relative}
+.tnav-row.h48{height:48px;justify-content:flex-start;gap:12px}
+.tic{width:24px;height:24px;display:flex !important;align-items:center;justify-content:center;color:#000;flex:none;position:relative}
+.tic::after{content:"";position:absolute;inset:-10px}
+.tnav-title{position:absolute;left:50%;top:-2px;transform:translateX(-50%);max-width:calc(100% - 96px);font-size:20px;line-height:28px;font-weight:700;color:#000;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;pointer-events:none}
 .info-row{display:flex;padding:10px 24px;font-size:16px;font-weight:500;line-height:1.5}
 .info-row .k{width:100px;flex:none;color:#7C7B7E}
 .info-row .v{color:#272727;flex:1;min-width:0}
@@ -125,9 +133,10 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 .dot.on{width:16px;background:rgba(255,255,255,.8)}
 .btxt{position:absolute;left:0;right:0;bottom:0;opacity:0;transition:opacity .4s ease}
 .btxt.on{opacity:1}
-/* Figma top-nav: type=logo-transparent(배너 위) / type=logo-solid(배너 텍스트 영역부터) — 393×56, padding 20/24/12/24 */
-.hdr{position:absolute;top:0;left:0;right:0;height:calc(56px + var(--sb));padding:calc(20px + var(--sb)) 24px 12px;z-index:10;display:flex;align-items:center;justify-content:space-between;background:rgba(194,193,196,.2);box-shadow:0 4px 4px rgba(0,0,0,.25)}
-.hdr.solid{background:#fff}
+/* Figma top-nav(2997:14585), safe-area-top=off — 393×48, padding 12/24. 상태바 영역(--sb)은 바깥 래퍼가 같은 배경으로 덮음 */
+/* 홈: logo-transparent(배너 위, 래퍼 20% + 그림자) / logo-solid(흰색, 그림자 없음) */
+.hdr{position:absolute;top:0;left:0;right:0;height:calc(48px + var(--sb));padding:calc(12px + var(--sb)) 24px 12px;z-index:10;display:flex;align-items:center;justify-content:space-between;background:rgba(194,193,196,.2);box-shadow:0 4px 4px rgba(0,0,0,.25)}
+.hdr.solid{background:#fff;box-shadow:none}
 .hdr .logo{width:136px;height:24px;filter:brightness(0) invert(1) drop-shadow(0 0 1px rgba(0,0,0,.25))}
 .hdr.solid .logo{filter:none}
 .hdr .bell{width:24px;height:24px;color:#fff}
@@ -137,7 +146,7 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 .field{width:100%;height:48px;border-radius:10px;background:#F8F7F9;border:1px solid #EAE9EC;padding:0 16px;font-size:16px;font-weight:400;color:#272727;outline:none}
 .field:focus{border-color:#B086F0;background:#fff}
 .field::placeholder{color:#A4A3A6}
-.seg{flex:1;display:flex !important;align-items:center;gap:8px;height:52px;padding:0 16px !important;color:#7C7B7E;font-size:16px;font-weight:400}
+.seg{flex:1;display:flex !important;align-items:center;gap:12px;height:48px;padding:12px 16px !important;color:#7C7B7E;font-size:16px;line-height:24px;font-weight:400}
 .seg svg{color:#A4A3A6}
 .seg.on svg{color:#000000}
 .kb{position:absolute;left:0;right:0;bottom:0;z-index:40;background:#D3D5DB;padding:8px 3px 0;box-shadow:0 -1px 0 rgba(0,0,0,.06)}
@@ -211,10 +220,10 @@ Apple로 시작하기</button>
 
 <!-- ===================== ONBOARDING: LOCATION ===================== -->
 <sc-if value="{{isLoc}}" hint-placeholder-val="{{ false }}">
-<div class="scr scr-in" style="padding-top: var(--sb)">
-<div class="nav" style="box-shadow: 0 1px 0 #EAE9EC">
-<button class="iconbtn" onClick="{{toLogin}}" aria-label="뒤로가기"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
-</div>
+<div class="scr scr-in">
+<div class="tnav"><div class="tnav-row">
+<button class="tic" onClick="{{toLogin}}" aria-label="뒤로가기"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill="currentColor" d="M14.2929 5.29289C14.6834 4.90237 15.3164 4.90237 15.707 5.29289C16.0975 5.68342 16.0975 6.31643 15.707 6.70696L10.414 11.9999L15.707 17.2929C16.0975 17.6834 16.0975 18.3164 15.707 18.707C15.3164 19.0975 14.6834 19.0975 14.2929 18.707L8.29289 12.707C7.90237 12.3164 7.90237 11.6834 8.29289 11.2929L14.2929 5.29289Z"/></svg></button>
+</div></div>
 <div class="scroll" style="padding-bottom: 24px">
 <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 32px">
 <span style="width: 24px; height: 24px; border-radius: 12px; background: #B086F0; color: #ffffff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center">1</span>
@@ -236,10 +245,10 @@ Apple로 시작하기</button>
 
 <!-- ===================== ONBOARDING: NICKNAME ===================== -->
 <sc-if value="{{isNick}}" hint-placeholder-val="{{ false }}">
-<div class="scr scr-in" style="padding-top: var(--sb)">
-<div class="nav" style="box-shadow: 0 1px 0 #EAE9EC">
-<button class="iconbtn" onClick="{{toLoc}}" aria-label="뒤로가기"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
-</div>
+<div class="scr scr-in">
+<div class="tnav"><div class="tnav-row">
+<button class="tic" onClick="{{toLoc}}" aria-label="뒤로가기"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill="currentColor" d="M14.2929 5.29289C14.6834 4.90237 15.3164 4.90237 15.707 5.29289C16.0975 5.68342 16.0975 6.31643 15.707 6.70696L10.414 11.9999L15.707 17.2929C16.0975 17.6834 16.0975 18.3164 15.707 18.707C15.3164 19.0975 14.6834 19.0975 14.2929 18.707L8.29289 12.707C7.90237 12.3164 7.90237 11.6834 8.29289 11.2929L14.2929 5.29289Z"/></svg></button>
+</div></div>
 <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 32px">
 <span style="width: 10px; height: 10px; border-radius: 5px; background: #EAE9EC"></span>
 <span style="width: 24px; height: 24px; border-radius: 12px; background: #B086F0; color: #ffffff; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center">2</span>
@@ -336,7 +345,7 @@ Apple로 시작하기</button>
 </div>
 
 <!-- Category tabs -->
-<div style="display: flex; position: sticky; top: calc(56px + var(--sb)); z-index: 5; background: #ffffff">
+<div style="display: flex; position: sticky; top: calc(48px + var(--sb)); z-index: 5; background: #ffffff">
 <sc-for list="{{homeCats}}" as="c" hint-placeholder-count="3">
 <button class="cat {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button>
 </sc-for>
@@ -399,23 +408,23 @@ Apple로 시작하기</button>
 
 <!-- ===================== SEARCH ===================== -->
 <sc-if value="{{isSearch}}" hint-placeholder-val="{{ false }}">
-<div class="scr scr-in" style="padding-top: var(--sb)">
+<div class="scr scr-in">
 <sc-if value="{{searchIdle}}" hint-placeholder-val="{{ true }}">
-<div class="nav">
-<button class="iconbtn" onClick="{{toHome}}" aria-label="뒤로가기"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
-<span class="navtitle">검색</span>
-<span style="width: 44px"></span>
+<!-- Figma top-nav type=search-filter -->
+<div class="tnav">
+<div class="tnav-row">
+<button class="tic" onClick="{{toHome}}" aria-label="뒤로가기"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill="currentColor" d="M14.2929 5.29289C14.6834 4.90237 15.3164 4.90237 15.707 5.29289C16.0975 5.68342 16.0975 6.31643 15.707 6.70696L10.414 11.9999L15.707 17.2929C16.0975 17.6834 16.0975 18.3164 15.707 18.707C15.3164 19.0975 14.6834 19.0975 14.2929 18.707L8.29289 12.707C7.90237 12.3164 7.90237 11.6834 8.29289 11.2929L14.2929 5.29289Z"/></svg></button>
+<span class="tnav-title" style="color: #2C2B2E">검색</span>
 </div>
-<div style="padding: 8px 24px 24px">
-<div class="sbox {{sboxCls}}" style="border: 1.5px solid #B086F0; border-radius: 14px; overflow: hidden">
-<div style="display: flex; align-items: center; gap: 10px; height: 52px; padding: 0 16px; border-bottom: 1px solid #EAE9EC">
-<svg class="sico {{kwCls}}" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+<div class="sbox {{sboxCls}}" style="border: 2px solid #B086F0; border-radius: 12px; overflow: hidden; background: #ffffff">
+<div style="display: flex; align-items: center; gap: 12px; height: 48px; padding: 12px 16px; border-bottom: 1px solid #EAE9EC">
+<svg class="sico {{kwCls}}" width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill="currentColor" d="M18 11C18 7.13401 14.866 4 11 4C7.13401 4 4 7.13401 4 11C4 14.866 7.13401 18 11 18C14.866 18 18 14.866 18 11ZM20 11C20 13.125 19.2619 15.0766 18.0303 16.6162L21.707 20.293C22.0976 20.6835 22.0976 21.3165 21.707 21.707C21.3165 22.0976 20.6835 22.0976 20.293 21.707L16.6162 18.0303C15.0766 19.2619 13.125 20 11 20C6.02944 20 2 15.9706 2 11C2 6.02944 6.02944 2 11 2C15.9706 2 20 6.02944 20 11Z"/></svg>
 <label for="q1" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">공연명 검색</label>
-<input id="q1" value="{{q}}" onChange="{{onQ}}" onKeyDown="{{onQKey}}" onFocus="{{qFocusOn}}" onBlur="{{qFocusOff}}" onClick="{{kbShow}}" inputMode="none" enterKeyHint="search" placeholder="공연명을 입력하세요" autoComplete="off" style="flex: 1; min-width: 0; border: 0; outline: none; font-size: 16px; font-weight: 400; color: #272727; background: transparent">
+<input id="q1" value="{{q}}" onChange="{{onQ}}" onKeyDown="{{onQKey}}" onFocus="{{qFocusOn}}" onBlur="{{qFocusOff}}" onClick="{{kbShow}}" inputMode="none" enterKeyHint="search" placeholder="공연명을 입력하세요" autoComplete="off" style="flex: 1; min-width: 0; border: 0; outline: none; font-size: 16px; line-height: 24px; font-weight: 400; color: #272727; background: transparent; padding: 0">
 </div>
 <div style="display: flex">
-<button class="seg {{sDateCls}}" onClick="{{openDateSheet}}" style="border-right: 1px solid #EAE9EC"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>{{sDateLabel}}</button>
-<button class="seg {{sRegionCls}}" onClick="{{openRegionSheet}}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>{{sRegionLabel}}</button>
+<button class="seg {{sDateCls}}" onClick="{{openDateSheet}}" style="border-right: 1px solid #EAE9EC"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill="currentColor" d="M20 11H4V20C4 20.5523 4.44771 21 5 21H19C19.5523 21 20 20.5523 20 20V11ZM15 6V5H9V6C9 6.55228 8.55228 7 8 7C7.44772 7 7 6.55228 7 6V5H5C4.44772 5 4 5.44772 4 6V9H20V6C20 5.44771 19.5523 5 19 5H17V6C17 6.55228 16.5523 7 16 7C15.4477 7 15 6.55228 15 6ZM22 20C22 21.6569 20.6569 23 19 23H5C3.34315 23 2 21.6569 2 20V6C2 4.34315 3.34315 3 5 3H7V2C7 1.44772 7.44772 1 8 1C8.55228 1 9 1.44772 9 2V3H15V2C15 1.44772 15.4477 1 16 1C16.5523 1 17 1.44772 17 2V3H19C20.6569 3 22 4.34315 22 6V20Z"/></svg>{{sDateLabel}}</button>
+<button class="seg {{sRegionCls}}" onClick="{{openRegionSheet}}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill="currentColor" d="M19 10C19 8.14348 18.2629 6.36256 16.9502 5.0498C15.6374 3.73705 13.8565 3 12 3C10.1435 3 8.36256 3.73705 7.0498 5.0498C5.73705 6.36256 5 8.14348 5 10C5 12.1593 6.21679 14.4871 7.79785 16.5645C9.32566 18.5717 11.0795 20.1963 12 20.9951C12.9205 20.1963 14.6743 18.5717 16.2021 16.5645C17.7832 14.4871 19 12.1593 19 10ZM14 10C14 8.89543 13.1046 8 12 8C10.8954 8 10 8.89543 10 10C10 11.1046 10.8954 12 12 12C13.1046 12 14 11.1046 14 10ZM16 10C16 12.2091 14.2091 14 12 14C9.79086 14 8 12.2091 8 10C8 7.79086 9.79086 6 12 6C14.2091 6 16 7.79086 16 10ZM21 10C21 12.8337 19.4474 15.603 17.7939 17.7754C16.1175 19.978 14.2102 21.7308 13.2549 22.5557C13.2379 22.5704 13.2201 22.5851 13.2021 22.5986C12.8556 22.8592 12.4336 23 12 23C11.5664 23 11.1444 22.8592 10.7979 22.5986C10.7799 22.5851 10.7621 22.5704 10.7451 22.5557C9.78983 21.7308 7.88248 19.978 6.20605 17.7754C4.55262 15.603 3 12.8337 3 10C3 7.61305 3.94791 5.32357 5.63574 3.63574C7.32357 1.94791 9.61305 1 12 1C14.3869 1 16.6764 1.94791 18.3643 3.63574C20.0521 5.32357 21 7.61305 21 10Z"/></svg>{{sRegionLabel}}</button>
 </div>
 </div>
 </div>
@@ -448,14 +457,15 @@ Apple로 시작하기</button>
 </sc-if>
 
 <sc-if value="{{searching}}" hint-placeholder-val="{{ false }}">
-<div style="display: flex; align-items: center; gap: 4px; padding: 4px 16px 4px 8px">
-<button class="iconbtn" onClick="{{clearQ}}" aria-label="검색 초기화"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
-<div style="flex: 1; min-width: 0; height: 44px; border: 1.5px solid #B086F0; border-radius: 22px; display: flex; align-items: center; padding: 0 6px 0 16px; gap: 4px">
+<!-- Figma top-nav type=search -->
+<div class="tnav" style="padding-bottom: 12px"><div class="tnav-row h48">
+<button class="tic" onClick="{{clearQ}}" aria-label="검색 초기화"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill="currentColor" d="M14.2929 5.29289C14.6834 4.90237 15.3164 4.90237 15.707 5.29289C16.0975 5.68342 16.0975 6.31643 15.707 6.70696L10.414 11.9999L15.707 17.2929C16.0975 17.6834 16.0975 18.3164 15.707 18.707C15.3164 19.0975 14.6834 19.0975 14.2929 18.707L8.29289 12.707C7.90237 12.3164 7.90237 11.6834 8.29289 11.2929L14.2929 5.29289Z"/></svg></button>
+<div style="flex: 1; min-width: 0; height: 48px; border: 2px solid #B086F0; border-radius: 30px; background: #ffffff; display: flex; align-items: center; padding: 12px 16px; gap: 12px">
 <label for="q2" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">공연명 검색</label>
-<input id="q2" value="{{q}}" onChange="{{onQ}}" onKeyDown="{{onQKey}}" onFocus="{{kbShow}}" onClick="{{kbShow}}" inputMode="none" placeholder="공연명을 입력하세요" autoComplete="off" style="flex: 1; min-width: 0; border: 0; outline: none; font-size: 16px; font-weight: 600; color: #272727; background: transparent">
-<button class="iconbtn" onClick="{{clearQText}}" aria-label="입력 지우기" style="width: 32px; height: 32px"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#C2C1C4"/><path d="M15 9l-6 6M9 9l6 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/></svg></button>
+<input id="q2" value="{{q}}" onChange="{{onQ}}" onKeyDown="{{onQKey}}" onFocus="{{kbShow}}" onClick="{{kbShow}}" inputMode="none" placeholder="공연명을 입력하세요" autoComplete="off" style="flex: 1; min-width: 0; border: 0; outline: none; font-size: 16px; line-height: 24px; font-weight: 600; color: #272727; background: transparent; padding: 0">
+<button class="tic" onClick="{{clearQText}}" aria-label="입력 지우기"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#C2C1C4"/><path d="M15 9l-6 6M9 9l6 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/></svg></button>
 </div>
-</div>
+</div></div>
 <div style="display: flex; padding: 0 0 0 12px; border-bottom: 1px solid #EAE9EC">
 <sc-for list="{{searchCats}}" as="c" hint-placeholder-count="3">
 <button class="utab auto {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button>
@@ -497,13 +507,12 @@ Apple로 시작하기</button>
 <!-- ===================== DETAIL ===================== -->
 <sc-if value="{{isDetail}}" hint-placeholder-val="{{ false }}">
 <div class="scr scr-in">
-<div style="height: calc(54px + var(--sb)); padding-top: var(--sb); flex: none; background: #ffffff; z-index: 6">
-<div class="nav">
-<button class="iconbtn" onClick="{{detailBack}}" aria-label="뒤로가기"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg></button>
-<span class="navtitle ellip1" style="padding: 0 8px">{{d.title}}</span>
-<button class="iconbtn" onClick="{{toggleWish}}" aria-label="{{wishLabel}}" aria-pressed="{{wished}}" style="color: {{heartColor}}"><svg width="24" height="24" viewBox="0 0 24 24" fill="{{heartFill}}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg></button>
-</div>
-</div>
+<!-- Figma top-nav type=title: 공연명 + 찜(icon/heart · heart-filled) -->
+<div class="tnav"><div class="tnav-row">
+<button class="tic" onClick="{{detailBack}}" aria-label="뒤로가기"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill="currentColor" d="M14.2929 5.29289C14.6834 4.90237 15.3164 4.90237 15.707 5.29289C16.0975 5.68342 16.0975 6.31643 15.707 6.70696L10.414 11.9999L15.707 17.2929C16.0975 17.6834 16.0975 18.3164 15.707 18.707C15.3164 19.0975 14.6834 19.0975 14.2929 18.707L8.29289 12.707C7.90237 12.3164 7.90237 11.6834 8.29289 11.2929L14.2929 5.29289Z"/></svg></button>
+<span class="tnav-title">{{d.title}}</span>
+<button class="tic" onClick="{{toggleWish}}" aria-label="{{wishLabel}}" aria-pressed="{{wished}}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill="currentColor" d="M21 8.5C21 7.30653 20.5256 6.16227 19.6816 5.31836C18.8377 4.47445 17.6935 4 16.5 4C15.7202 4 15.1131 4.10999 14.5518 4.35449C13.984 4.60181 13.4 5.01407 12.707 5.70703C12.3165 6.09756 11.6835 6.09756 11.293 5.70703C10.6 5.01407 10.016 4.60181 9.44824 4.35449C8.88687 4.10999 8.27982 4 7.5 4C6.30653 4 5.16227 4.47445 4.31836 5.31836C3.47445 6.16227 3 7.30653 3 8.5C3 10.116 3.91951 11.4583 5.15039 12.7363L12 19.5859L18.2998 13.2861C19.792 11.824 21 10.3359 21 8.5ZM23 8.5C23 11.2396 21.1925 13.2488 19.7061 14.7061L19.707 14.707L12.707 21.707C12.3165 22.0976 11.6835 22.0976 11.293 21.707L4.30469 14.7188C2.79906 13.2633 1 11.253 1 8.5C1 6.77609 1.68433 5.12231 2.90332 3.90332C4.12231 2.68433 5.77609 2 7.5 2C8.48018 2 9.37344 2.14001 10.2471 2.52051C10.8603 2.78761 11.4318 3.16121 12 3.6416C12.5682 3.16121 13.1397 2.78761 13.7529 2.52051C14.6266 2.14001 15.5198 2 16.5 2C18.2239 2 19.8777 2.68433 21.0967 3.90332C22.3157 5.12231 23 6.77609 23 8.5Z"/><path fill="{{heartFill}}" d="M21 8.5C21 7.30653 20.5256 6.16227 19.6816 5.31836C18.8377 4.47445 17.6935 4 16.5 4C15.7202 4 15.1131 4.10999 14.5518 4.35449C13.984 4.60181 13.4 5.01407 12.707 5.70703C12.3165 6.09756 11.6835 6.09756 11.293 5.70703C10.6 5.01407 10.016 4.60181 9.44824 4.35449C8.88687 4.10999 8.27982 4 7.5 4C6.30653 4 5.16227 4.47445 4.31836 5.31836C3.47445 6.16227 3 7.30653 3 8.5C3 10.116 3.91951 11.4583 5.15039 12.7363L12 19.5859L18.2998 13.2861C19.792 11.824 21 10.3359 21 8.5Z"/></svg></button>
+</div></div>
 <div class="scroll" onScroll="{{onDetailScroll}}" style="padding-bottom: calc(76px + var(--hb34))">
 <div style="height: 410px; position: relative; overflow: hidden; background: #2C2B2E">
 <img src="{{d.img}}" alt="" style="position: absolute; inset: -40px; width: calc(100% + 80px); height: calc(100% + 80px); object-fit: cover; filter: blur(24px) saturate(1.1); opacity: .9">
@@ -650,12 +659,11 @@ Apple로 시작하기</button>
 
 <!-- ===================== WRITE REVIEW ===================== -->
 <sc-if value="{{isWrite}}" hint-placeholder-val="{{ false }}">
-<div class="scr scr-in" style="padding-top: var(--sb); background: #ffffff">
-<div class="nav" style="box-shadow: 0 1px 0 #EAE9EC">
-<button class="iconbtn" onClick="{{writeBack}}" aria-label="뒤로가기"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
-<span class="navtitle">관람후기 작성</span>
-<span style="width: 44px"></span>
-</div>
+<div class="scr scr-in" style="background: #ffffff">
+<div class="tnav"><div class="tnav-row">
+<button class="tic" onClick="{{writeBack}}" aria-label="뒤로가기"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill="currentColor" d="M14.2929 5.29289C14.6834 4.90237 15.3164 4.90237 15.707 5.29289C16.0975 5.68342 16.0975 6.31643 15.707 6.70696L10.414 11.9999L15.707 17.2929C16.0975 17.6834 16.0975 18.3164 15.707 18.707C15.3164 19.0975 14.6834 19.0975 14.2929 18.707L8.29289 12.707C7.90237 12.3164 7.90237 11.6834 8.29289 11.2929L14.2929 5.29289Z"/></svg></button>
+<span class="tnav-title">관람후기 작성</span>
+</div></div>
 <div class="scroll" style="padding-bottom: calc(76px + var(--hb34))">
 <div style="display: flex; gap: 14px; padding: 16px 24px; background: #F8F7F9">
 <img src="{{d.img}}" alt="{{d.title}} 포스터" style="width: 72px; height: 96px; object-fit: cover; border-radius: 4px">
@@ -715,9 +723,10 @@ Apple로 시작하기</button>
 <sc-if value="{{isMy}}" hint-placeholder-val="{{ false }}">
 <div class="scr">
 <div class="scroll" style="padding-bottom: calc(76px + var(--tbb)); background: linear-gradient(160deg, #E0A9FF 0%, #B79BF6 45%, #98A3F7 100%)">
-<div style="padding: var(--sb) 8px 0; display: flex; justify-content: flex-end">
-<button class="iconbtn" onClick="{{openSettings}}" aria-label="설정" style="color: #ffffff"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></button>
-</div>
+<!-- Figma top-nav type=title, 배경 없음, title·left-icon off, right-icon=icon/settings(흰색) -->
+<div class="tnav clear"><div class="tnav-row" style="justify-content: flex-end">
+<button class="tic" onClick="{{openSettings}}" aria-label="설정" style="color: #ffffff"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill="currentColor" d="M13.2198 4C13.2198 3.73478 13.1144 3.48051 12.9268 3.29297C12.7393 3.10552 12.485 3 12.2198 3H11.7804C11.5152 3 11.2609 3.10552 11.0733 3.29297C10.8858 3.48051 10.7804 3.73478 10.7804 4V4.18066C10.7798 4.70675 10.6403 5.22422 10.377 5.67969C10.1138 6.13494 9.73579 6.51341 9.28036 6.77637L9.27939 6.77539L8.85263 7.02441L8.8497 7.02637C8.39375 7.28951 7.87614 7.42773 7.3497 7.42773C6.82323 7.42767 6.30564 7.28961 5.8497 7.02637L5.72958 6.96191C5.71984 6.95672 5.70985 6.95181 5.70029 6.94629C5.47083 6.81395 5.19837 6.77825 4.94247 6.84668C4.68657 6.91512 4.46782 7.0823 4.33505 7.31152L4.11533 7.69141C3.98383 7.92042 3.94855 8.19208 4.01669 8.44727C4.07659 8.67125 4.21196 8.86674 4.39853 9.00098L4.48154 9.05469L4.53525 9.08789L4.68466 9.1875C5.11384 9.44748 5.47118 9.80977 5.72372 10.2441C5.98687 10.6968 6.12681 11.2108 6.12997 11.7344V12.2461L6.12411 12.4434C6.09563 12.9034 5.96206 13.3518 5.73154 13.7529C5.47086 14.2065 5.09511 14.5827 4.64365 14.8467L4.49423 14.9375C4.48997 14.9401 4.48584 14.9428 4.48154 14.9453C4.25231 15.0781 4.08513 15.2968 4.01669 15.5527C3.94855 15.8079 3.98383 16.0796 4.11533 16.3086L4.33408 16.6885C4.46685 16.9177 4.68657 17.0849 4.94247 17.1533C5.19837 17.2217 5.47083 17.186 5.70029 17.0537C5.70985 17.0482 5.71984 17.0433 5.72958 17.0381L5.8497 16.9736C6.30564 16.7104 6.82323 16.5723 7.3497 16.5723C7.87614 16.5723 8.39375 16.7105 8.8497 16.9736L8.85263 16.9756L9.27939 17.2236C9.73484 17.4866 10.1138 17.865 10.377 18.3203C10.6403 18.7758 10.7798 19.2932 10.7804 19.8193V20C10.7804 20.2652 10.8858 20.5195 11.0733 20.707C11.2609 20.8945 11.5152 21 11.7804 21H12.2198C12.485 21 12.7393 20.8945 12.9268 20.707C13.1144 20.5195 13.2198 20.2652 13.2198 20V19.8193C13.2204 19.2932 13.3599 18.7758 13.6231 18.3203C13.8864 17.8651 14.2644 17.4866 14.7198 17.2236L15.1476 16.9756L15.1505 16.9736C15.6064 16.7105 16.124 16.5723 16.6505 16.5723C17.177 16.5723 17.6945 16.7104 18.1505 16.9736L18.2999 17.0537C18.5294 17.1861 18.8018 17.2217 19.0577 17.1533C19.3136 17.0849 19.5324 16.9177 19.6651 16.6885L19.879 16.3086L19.8839 16.3008L19.9288 16.2119C20.0233 16.0026 20.0433 15.7658 19.9835 15.542C19.915 15.2862 19.7478 15.0683 19.5186 14.9355L19.3995 14.8721C19.3897 14.8669 19.3798 14.862 19.3702 14.8564C18.9124 14.5921 18.5321 14.2113 18.2686 13.7529C18.0053 13.2946 17.8681 12.7747 17.8702 12.2461V11.75C17.8688 11.2228 18.0059 10.7042 18.2686 10.2471C18.5293 9.79359 18.9042 9.41629 19.3556 9.15234L19.506 9.0625L19.5186 9.05469C19.7479 8.92191 19.9151 8.70318 19.9835 8.44727C20.0516 8.19208 20.0164 7.92042 19.8849 7.69141L19.6651 7.31152C19.5324 7.0823 19.3136 6.91512 19.0577 6.84668C18.8018 6.77825 18.5294 6.81395 18.2999 6.94629C18.2903 6.95181 18.2803 6.95672 18.2706 6.96191L18.1495 7.02539C17.6936 7.28857 17.1769 7.42767 16.6505 7.42773C16.124 7.42773 15.6064 7.28951 15.1505 7.02637L15.1476 7.02441L14.7198 6.77539C14.2646 6.51245 13.8863 6.13479 13.6231 5.67969C13.3599 5.22422 13.2204 4.70675 13.2198 4.18066V4ZM14.0001 12C14.0001 10.8954 13.1047 10 12.0001 10C10.8955 10 10.0001 10.8954 10.0001 12C10.0001 13.1046 10.8955 14 12.0001 14C13.1047 14 14.0001 13.1046 14.0001 12ZM16.0001 12C16.0001 14.2091 14.2092 16 12.0001 16C9.79095 16 8.00009 14.2091 8.00009 12C8.00009 9.79086 9.79095 8 12.0001 8C14.2092 8 16.0001 9.79086 16.0001 12ZM15.2198 4.17871C15.22 4.35407 15.2668 4.52689 15.3546 4.67871C15.4205 4.79256 15.5077 4.89215 15.6114 4.97168L15.7227 5.0459L16.1495 5.29395C16.3015 5.38171 16.4749 5.42773 16.6505 5.42773C16.8259 5.42767 16.9986 5.38165 17.1505 5.29395L17.1798 5.27734L17.3292 5.19727C18.0116 4.81347 18.8171 4.71164 19.5743 4.91406C20.342 5.11935 20.9973 5.62093 21.3956 6.30859L21.6153 6.68945L21.6163 6.69043C22.0133 7.37867 22.1212 8.19629 21.9161 8.96387C21.7121 9.72683 21.2144 10.3773 20.5333 10.7764L20.5343 10.7773L20.3849 10.8672C20.3801 10.8701 20.375 10.8732 20.3702 10.876C20.2176 10.9641 20.0908 11.0914 20.003 11.2441C19.9153 11.3968 19.8695 11.57 19.8702 11.7461V12.2539C19.8695 12.43 19.9153 12.6032 20.003 12.7559C20.0891 12.9056 20.2128 13.0303 20.3614 13.1182L20.4903 13.1875C20.5006 13.193 20.5115 13.1992 20.5216 13.2051C21.209 13.6034 21.7108 14.2579 21.9161 15.0254C22.1205 15.7898 22.0131 16.6035 21.6202 17.29L21.6212 17.291L21.4015 17.6816L21.3956 17.6914C20.9973 18.3791 20.342 18.8806 19.5743 19.0859C18.817 19.2884 18.0117 19.1848 17.3292 18.8008V18.8027L17.1798 18.7227C17.17 18.7174 17.1601 18.7116 17.1505 18.7061C16.9986 18.6183 16.8259 18.5723 16.6505 18.5723C16.4751 18.5723 16.3024 18.6184 16.1505 18.7061L16.1495 18.7051L15.7227 18.9541L15.6114 19.0283C15.5077 19.1079 15.4205 19.2074 15.3546 19.3213C15.2668 19.4731 15.22 19.6459 15.2198 19.8213V20C15.2198 20.7955 14.9043 21.5585 14.3419 22.1211C13.7793 22.6837 13.0155 23 12.2198 23H11.7804C10.9847 23 10.2209 22.6837 9.65829 22.1211C9.09591 21.5585 8.78036 20.7955 8.78036 20V19.8213L8.77158 19.6904C8.75437 19.5609 8.71143 19.4352 8.6456 19.3213C8.57973 19.2074 8.49247 19.1079 8.38876 19.0283L8.27744 18.9541L7.8497 18.7051C7.69785 18.6176 7.52496 18.5723 7.3497 18.5723C7.1743 18.5723 7.00161 18.6183 6.8497 18.7061C6.84009 18.7116 6.83019 18.7174 6.8204 18.7227L6.67099 18.8027L6.67001 18.8008C5.9877 19.1844 5.18293 19.2883 4.42587 19.0859C3.65815 18.8806 3.00292 18.3791 2.60458 17.6914L2.38486 17.3115L2.38388 17.3096C1.9869 16.6213 1.87896 15.8037 2.08408 15.0361C2.28806 14.2733 2.78498 13.6217 3.46591 13.2227L3.62997 13.124C3.78258 13.0359 3.90936 12.9086 3.99716 12.7559C4.08486 12.6032 4.13067 12.43 4.12997 12.2539V11.7461L4.12119 11.6162C4.10351 11.4873 4.06006 11.3622 3.99423 11.249C3.90653 11.0984 3.78095 10.9729 3.62997 10.8857C3.61145 10.875 3.59308 10.8634 3.57529 10.8516L3.42587 10.752C2.76609 10.351 2.28393 9.71127 2.08408 8.96387C1.87896 8.19629 1.9869 7.37867 2.38388 6.69043L2.38486 6.68848L2.60458 6.30859C3.00291 5.62093 3.65814 5.11935 4.42587 4.91406C5.18277 4.71171 5.98779 4.81479 6.67001 5.19824L6.67099 5.19727L6.8204 5.27734C6.83019 5.28257 6.84009 5.2884 6.8497 5.29395C7.00161 5.38165 7.1743 5.42767 7.3497 5.42773C7.52513 5.42773 7.69775 5.38161 7.8497 5.29395L8.27744 5.0459L8.38876 4.97168C8.49247 4.89215 8.57973 4.79256 8.6456 4.67871C8.73324 4.52709 8.78006 4.3548 8.78036 4.17969V4C8.78036 3.20452 9.09591 2.44148 9.65829 1.87891C10.2209 1.3163 10.9847 1 11.7804 1H12.2198C13.0155 1 13.7793 1.3163 14.3419 1.87891C14.9043 2.44148 15.2198 3.20452 15.2198 4V4.17871Z"/></svg></button>
+</div></div>
 <div style="display: flex; align-items: center; gap: 22px; padding: 6px 24px 0">
 <img src="./assets/image-a3c5.jpg" alt="프로필 사진" style="width: 120px; height: 120px; border-radius: 60px; object-fit: cover; border: 3px solid rgba(255,255,255,.7); flex: none">
 <div style="color: #ffffff; flex: 1; min-width: 0">
@@ -1327,7 +1336,7 @@ class Component extends DCLogic {
       closeSheet: () => set({ sheet: null }),
       // detail
       d, wished, wishLabel: wished ? '찜 해제' : '찜하기',
-      heartFill: wished ? 'currentColor' : 'none', heartColor: wished ? '#FA6363' : '#272727',
+      heartFill: wished ? '#000000' : 'none',
       toggleWish: () => { set({ wish: Object.assign({}, s.wish, { [base.id]: !wished }) }); this.showToast(wished ? '찜을 해제했어요' : '찜한 공연에 추가했어요'); },
       detailBack: () => set({ screen: s.prev || 'home' }),
       tInfo: s.dTab === 'info' ? 'on' : '', tTicket: s.dTab === 'ticket' ? 'on' : '', tReview: s.dTab === 'review' ? 'on' : '',
