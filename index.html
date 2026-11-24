@@ -35,6 +35,7 @@
 body{margin:0;background:#fff}
 /* 웹 버전: 실제 폰 브라우저에서는 목업용 상태바(54px)·홈바(44/34px) 여백을 제거 */
 @media (max-width: 500px) and (pointer: coarse){
+  .app{width:100vw !important}
   :root{--sb:env(safe-area-inset-top,0px);--hb:calc(16px + env(safe-area-inset-bottom,0px));--hb34:calc(16px + env(safe-area-inset-bottom,0px));--tbb:calc(8px + env(safe-area-inset-bottom,0px))}
 }
 /* 웹 버전: 앱 화면을 브라우저 가운데에 배치 */
@@ -114,12 +115,12 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 .modal-wrap{position:absolute;inset:0;background:rgba(20,18,26,.45);z-index:60;display:flex;align-items:center;justify-content:center;padding:0 32px}
 .modal{background:#fff;border-radius:20px;padding:28px 20px 20px;width:100%;text-align:center}
 .toast{position:absolute;left:50%;bottom:120px;transform:translateX(-50%);background:rgba(39,39,39,.92);color:#fff;font-size:14px;line-height:1.5;padding:12px 18px;border-radius:24px;z-index:70;white-space:nowrap}
-.track{display:flex;width:1179px;height:100%;transition:transform .5s ease}
+.track{display:flex;width:300%;height:100%;transition:transform .5s ease}
 .bnr{touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
 .bnr.drag{cursor:grabbing}.bnr.drag .track{transition:none}
 .bnr img{-webkit-user-drag:none;pointer-events:none}
-.track.t0{transform:translateX(0)}.track.t1{transform:translateX(-393px)}.track.t2{transform:translateX(-786px)}
-.slide{width:393px;height:100%;position:relative;overflow:hidden;flex:none;display:block !important}
+.track.t0{transform:translateX(0)}.track.t1{transform:translateX(-33.3333%)}.track.t2{transform:translateX(-66.6667%)}
+.slide{width:33.3333%;height:100%;position:relative;overflow:hidden;flex:none;display:block !important}
 .dot{width:6px;height:6px;border-radius:10px;background:rgba(255,255,255,.25)}
 .dot.on{width:16px;background:rgba(255,255,255,.8)}
 .btxt{position:absolute;left:0;right:0;bottom:0;opacity:0;transition:opacity .4s ease}
@@ -186,7 +187,7 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 <div class="scr scr-in" style="padding: 0 20px var(--hb)">
 <!-- 로고 모션(assets/splash.json): 1080×1920 모션을 축소해 마지막 프레임의 로고가 아래 로고 자리(169×30, x112·y196)에 오도록 배치. 재생 후 마지막 프레임에서 멈춤 -->
 <div class="lm-wrap {{logoWrapCls}}">
-<div id="login-motion" aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; transform-origin: 0 0; transform: translate(105.386px, calc(var(--sb) - 5.38px)) scale(0.16869); pointer-events: none"></div>
+<div id="login-motion" aria-hidden="true" style="position: absolute; left: calc(50% - 196.5px); top: 0; width: 1080px; height: 1920px; transform-origin: 0 0; transform: translate(105.386px, calc(var(--sb) - 5.38px)) scale(0.16869); pointer-events: none"></div>
 </div>
 <div style="flex: 1; display: flex; flex-direction: column; align-items: center; padding-top: calc(142px + var(--sb))">
 <div role="img" aria-label="내안의연뮤, 연극과 뮤지컬 더 가까이 더 깊이" style="width: 169px; height: 30px"></div>
@@ -1285,7 +1286,7 @@ class Component extends DCLogic {
         }
         if (d.moved) {
           const i = this.state.banner, edge = (i === 0 && dx > 0) || (i === 2 && dx < 0);
-          const track = d.el.firstElementChild; if (track) track.style.transform = 'translateX(' + (-393 * i + (edge ? dx / 3 : dx)) + 'px)';
+          const track = d.el.firstElementChild; if (track) track.style.transform = 'translateX(' + (-d.el.clientWidth * i + (edge ? dx / 3 : dx)) + 'px)';
         }
       },
       bnUp: (e) => {
