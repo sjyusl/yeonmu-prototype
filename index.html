@@ -55,7 +55,7 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 .lm-wrap{position:absolute;inset:0;pointer-events:none;transform:translateY(0);transition:transform .6s cubic-bezier(.33,0,.2,1)}
 .lm-wrap.center{transform:translateY(calc(50% - var(--sb) - 174px))}
 .pre-hide{opacity:0;pointer-events:none}
-.login-rest{transition:opacity .4s ease}
+.login-rest{transition:opacity .4s ease .6s} /* 로고가 다 올라간 뒤(0.6s) 페이드인 → 겹침 없음 */
 .scr{position:absolute;inset:0;display:flex;flex-direction:column;background:#fff}
 .scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;scroll-behavior:smooth;position:relative}
 .scroll::-webkit-scrollbar{display:none}
@@ -1040,6 +1040,8 @@ class Component extends DCLogic {
     const done = () => { if (!this.state.logoDone) this.setState({ logoDone: true }); };
     anim.addEventListener('DOMLoaded', () => { if (play && !this._logoPlayed) { this._logoPlayed = true; anim.play(); } else { anim.goToAndStop(anim.totalFrames - 1, true); done(); } });
     anim.addEventListener('complete', done);
+    // 슬로건 등장이 끝나는 130프레임(약 4.3초)에서 바로 올라가기 시작 (뒤의 정지 구간을 기다리지 않음)
+    anim.addEventListener('enterFrame', (ev) => { if (ev.currentTime >= 130) done(); });
     anim.addEventListener('data_failed', done);
     clearTimeout(this._s); this._s = setTimeout(done, 9000);
     this._anim = anim;
