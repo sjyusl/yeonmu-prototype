@@ -1116,7 +1116,6 @@ class Component extends DCLogic {
     if (n.length) {
       if (n.length > 8) { nickState = 'err'; nickMsg = '8글자 이내로 별명을 정해주세요.'; }
       else if (/[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]/.test(n)) { nickState = 'err'; nickMsg = '한글, 영문, 숫자만 사용할 수 있어요.'; }
-      else if (/[ㄱ-ㅎㅏ-ㅣ]/.test(n)) { nickState = 'idle'; nickMsg = ''; }
       else if (n.length < 2) { nickState = 'err'; nickMsg = '2글자 이상 입력해주세요.'; }
       else if (['연뮤덕', '극장가는길', '관리자', '내안의연뮤'].indexOf(n) >= 0) { nickState = 'err'; nickMsg = '이미 사용 중인 별명이에요.'; }
       else { nickState = 'ok'; nickMsg = '사용 가능한 별명이에요.'; }
