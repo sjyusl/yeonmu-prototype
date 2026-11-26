@@ -137,12 +137,13 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 .modal-wrap{position:absolute;inset:0;background:rgba(20,18,26,.45);z-index:60;display:flex;align-items:center;justify-content:center;padding:0 32px}
 .modal{background:#fff;border-radius:20px;padding:28px 20px 20px;width:100%;text-align:center}
 .toast{position:absolute;left:50%;bottom:120px;transform:translateX(-50%);background:rgba(39,39,39,.92);color:#fff;font-size:14px;line-height:1.5;padding:12px 18px;border-radius:24px;z-index:70;white-space:nowrap}
-.track{display:flex;width:300%;height:100%;transition:transform .5s ease}
+.track{display:flex;width:500%;height:100%;transition:transform .5s ease}
+.track.noanim{transition:none}
 .bnr{touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
 .bnr.drag{cursor:grabbing}.bnr.drag .track{transition:none}
 .bnr img{-webkit-user-drag:none;pointer-events:none}
 .track.t0{transform:translateX(0)}.track.t1{transform:translateX(-33.3333%)}.track.t2{transform:translateX(-66.6667%)}
-.slide{width:33.3333%;height:100%;position:relative;overflow:hidden;flex:none;display:block !important}
+.slide{width:20%;height:100%;position:relative;overflow:hidden;flex:none;display:block !important}
 .dot{width:6px;height:6px;border-radius:10px;background:rgba(255,255,255,.25)}
 .dot.on{width:16px;background:rgba(255,255,255,.8)}
 .btxt{position:absolute;left:0;right:0;bottom:0;opacity:0;transition:opacity .4s ease}
@@ -306,8 +307,9 @@ Apple로 시작하기</button>
 <!-- Banner -->
 <!-- Figma 배너(3078:14469): 이미지만 슬라이드, 그라데이션은 고정, 텍스트는 크로스페이드 -->
 <div class="bnr" onPointerDown="{{bnDown}}" onPointerMove="{{bnMove}}" onPointerUp="{{bnUp}}" onPointerCancel="{{bnUp}}" onClickCapture="{{bnClick}}" style="height: 540px; position: relative; overflow: hidden; background: #8967BD">
-<div class="track t{{banner}}">
-<sc-for list="{{slides}}" as="b" hint-placeholder-count="3">
+<!-- 무한 롤링: [3번 복제, 1, 2, 3, 1번 복제] 트랙. 복제 칸에 도착하면 애니메이션 없이 진짜 칸으로 순간 이동 -->
+<div class="track {{trkCls}}" style="transform: translateX(-{{trkPct}}%)">
+<sc-for list="{{loopSlides}}" as="b" hint-placeholder-count="5">
 <button class="slide" onClick="{{b.open}}" aria-label="{{b.label}}">
 <img src="{{b.img}}" alt="" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover">
 </button>
@@ -1026,7 +1028,7 @@ class Component extends DCLogic {
     const start = (props.startScreen && props.startScreen !== 'splash') ? props.startScreen : 'login';
     this.state = {
       screen: start, logoDone: start !== 'login', prev: 'home', region: '', nick: '', nickFinal: '',
-      homeCat: 'all', banner: 0, scrolled: false, sheet: null, fTab: 'region',
+      homeCat: 'all', banner: 0, bpos: 1, bnoanim: false, scrolled: false, sheet: null, fTab: 'region',
       qFocus: false, calY: new Date().getFullYear(), calM: new Date().getMonth(), q: '', submitted: false, kbOpen: false, kbShift: false, kbNum: false, recent: ['시카고', '해밀턴', '러브레터'],
       sDate: '', sRegion: '', fDate: '', fRegion: '', sCat: 'all',
       detailId: '', dTab: 'info', descOpen: false, topCat: 'GGGA',
@@ -1051,10 +1053,20 @@ class Component extends DCLogic {
       this.setState({ imagesReady: true });
     } catch (e) { this.setState({ loadError: '공연 정보를 불러오지 못했어요' }); }
   }
+  bnGo(p) {
+    clearTimeout(this._bnSnap);
+    this.setState({ bpos: p, bnoanim: false, banner: ((p - 1) % 3 + 3) % 3 });
+    if (p === 0 || p === 4) {
+      this._bnSnap = setTimeout(() => {
+        this.setState({ bnoanim: true, bpos: p === 4 ? 1 : 3 });
+        requestAnimationFrame(() => requestAnimationFrame(() => this.setState({ bnoanim: false })));
+      }, 520);
+    }
+  }
   startBanner() {
     clearInterval(this._b);
     this._b = setInterval(() => {
-      if (this.state.screen === 'home' && !this.state.sheet && !this._bn) this.setState({ banner: (this.state.banner + 1) % 3 });
+      if (this.state.screen === 'home' && !this.state.sheet && !this._bn) this.bnGo(this.state.bpos + 1);
     }, 4000);
   }
   componentDidMount() {
@@ -1171,7 +1183,8 @@ class Component extends DCLogic {
     const b2 = byId[pool[today.getDate() % Math.max(1, pool.length)]];
     const bannerDefs = [[b1, '마감 임박, 인기 공연', '종료 7일 이내, 누적 예매율 1위 공연'], [b2, '작년 오늘, 수상작', '1년 전 오늘 수상 기록을 세운 랜덤 명작'], [b3, '내 주변 실시간 1위', '위치 기반 실시간 가장 높은 예매율']];
     const slides = bannerDefs.map(([x, title, sub], i) => ({ img: x ? IMG[x.id] : undefined, title, sub, label: title + (x ? ' · ' + x.title : ''), cls: s.banner === i ? 'on' : '', open: () => { if (x) this.openDetail(x.id); } }));
-    const dots = [0, 1, 2].map((i) => ({ cls: s.banner === i ? 'on' : '', label: (i + 1) + '번째 배너', pick: () => set({ banner: i }) }));
+    const dots = [0, 1, 2].map((i) => ({ cls: s.banner === i ? 'on' : '', label: (i + 1) + '번째 배너', pick: () => { this.bnGo(i + 1); this.startBanner(); } }));
+    const loopSlides = [slides[2], slides[0], slides[1], slides[2], slides[0]];
     const homeReviews = s.reviews.slice(0, 5).map(revView);
 
     // search
@@ -1292,7 +1305,7 @@ class Component extends DCLogic {
       hdrCls: s.scrolled ? 'solid' : '',
       onHomeScroll: (e) => { const el = e.currentTarget; const hdr = el.parentNode.querySelector('.hdr'); const sc = el.scrollTop + (hdr ? hdr.offsetHeight : 56) >= 422; if (sc !== s.scrolled) set({ scrolled: sc }); },
       onBell: () => this.showToast('새로운 알림이 없어요'),
-      banner: s.banner, slides, dots, homeReviews, homeCats, nearList, nearEmpty: nearList.length === 0, homeSections: sections,
+      banner: s.banner, slides, loopSlides, trkPct: s.bpos * 20, trkCls: s.bnoanim ? 'noanim' : '', dots, homeReviews, homeCats, nearList, nearEmpty: nearList.length === 0, homeSections: sections,
       regionLabel: s.region || '대구',
       openHomeRegion: () => set({ sheet: 'homeRegion' }),
       homeRegions: regionGrid(s.region || '대구', (r) => set({ region: r, sheet: null })),
@@ -1314,19 +1327,17 @@ class Component extends DCLogic {
           if (Math.abs(dx) > 6) { d.moved = true; d.el.classList.add('drag'); try { d.el.setPointerCapture(d.id); } catch (err) {} }
         }
         if (d.moved) {
-          const i = this.state.banner, edge = (i === 0 && dx > 0) || (i === 2 && dx < 0);
-          const track = d.el.firstElementChild; if (track) track.style.transform = 'translateX(' + (-d.el.clientWidth * i + (edge ? dx / 3 : dx)) + 'px)';
+          const track = d.el.firstElementChild; if (track) track.style.transform = 'translateX(' + (-d.el.clientWidth * this.state.bpos + dx) + 'px)';
         }
       },
       bnUp: (e) => {
         const d = this._bn; this._bn = null; if (!d) return;
         const track = d.el.firstElementChild;
-        d.el.classList.remove('drag'); if (track) track.style.transform = '';
+        d.el.classList.remove('drag'); if (track) track.style.transform = 'translateX(-' + (this.state.bpos * 20) + '%)';
         if (!d.moved) return;
         d.el._justDragged = true; setTimeout(() => { d.el._justDragged = false; }, 50);
-        const dx = e.clientX - d.x, i = this.state.banner;
-        const next = dx < -60 ? Math.min(2, i + 1) : dx > 60 ? Math.max(0, i - 1) : i;
-        if (next !== i) this.setState({ banner: next });
+        const dx = e.clientX - d.x, p = this.state.bpos;
+        if (dx < -60) this.bnGo(p + 1); else if (dx > 60) this.bnGo(p - 1);
         this.startBanner();
       },
       bnClick: (e) => { if (e.currentTarget._justDragged) { e.preventDefault(); e.stopPropagation(); } },
