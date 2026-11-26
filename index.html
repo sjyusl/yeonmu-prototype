@@ -541,10 +541,11 @@ Apple로 시작하기</button>
 <div style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: #5E5D60"><span>{{d.type}}</span><span style="width: 1px; height: 12px; background: #D6D5D8"></span><span>{{d.age}}</span></div>
 <h1 style="margin: 0; font-size: 20px; font-weight: 700; text-align: center; line-height: 1.35">{{d.title}}</h1>
 </div>
-<div style="display: flex; position: sticky; top: 0; z-index: 5; background: #ffffff; padding-left: 12px; border-bottom: 1px solid #EAE9EC">
-<button class="utab auto {{tInfo}}" onClick="{{tabInfo}}">상세정보</button>
-<button class="utab auto {{tTicket}}" onClick="{{tabTicket}}">티켓예매</button>
-<button class="utab auto {{tReview}}" onClick="{{tabReview}}">관람후기</button>
+<!-- 마이와 같은 탭: 화면 폭을 3등분해 각 칸 가운데 정렬 -->
+<div class="mtabs" style="z-index: 5; background: #ffffff">
+<div><button class="mtab {{tInfo}}" onClick="{{tabInfo}}">상세정보</button></div>
+<div><button class="mtab {{tTicket}}" onClick="{{tabTicket}}">티켓예매</button></div>
+<div><button class="mtab {{tReview}}" onClick="{{tabReview}}">관람후기</button></div>
 </div>
 
 <section id="d-info" class="anchor" style="padding: 12px 0 16px">
