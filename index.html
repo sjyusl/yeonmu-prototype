@@ -45,6 +45,8 @@ body{margin:0;background:#fff}
 @media (pointer: coarse){
   :root{--sb:env(safe-area-inset-top,0px);--hb:calc(16px + env(safe-area-inset-bottom,0px));--hb34:calc(16px + env(safe-area-inset-bottom,0px));--tbb:calc(8px + env(safe-area-inset-bottom,0px))}
 }
+/* 홈 화면에 추가(웹앱)로 열면 앱을 화면 전체에 고정 — 하단 탭바가 화면 맨 아래에 붙도록 */
+@media (display-mode: standalone){.app{position:fixed !important;inset:0 !important;width:auto !important;height:auto !important}}
 /* 웹 버전: 앱 화면을 브라우저 가운데에 배치 */
 body{display:flex;justify-content:center;align-items:center;min-height:100vh;min-height:100dvh}
 /* 웹 버전: 화면 좌우 끝 1px 구분선 (primitive/neutral/200 #EAE9EC) */
@@ -111,6 +113,18 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 .tab.on{background:#F7EFFF;color:#9A6BE3;font-weight:600}
 .divider{height:8px;background:#F8F7F9}
 .my-top{position:sticky;top:0;z-index:0}
+/* 프로필 설정 (Figma 3177:12236) */
+.pf{background:linear-gradient(155deg,#D7A6FF 0%,#709FF6 100%);color:#fff}
+.pf .tnav-title{color:#fff}
+.pv-row{display:flex;align-items:center;gap:12px;overflow-x:auto;padding:24px calc(50% - 60px);height:168px;scroll-snap-type:x mandatory;scrollbar-width:none}
+.pv-item{flex:none;width:72px;height:72px;border-radius:50%;overflow:hidden;scroll-snap-align:center;transition:width .25s ease,height .25s ease;background:#EDE3FB;padding:0}
+.pv-item img{width:100%;height:100%;object-fit:cover;display:block}
+.pv-item.on{width:120px;height:120px;box-shadow:0 0 0 2px #fff}
+.pf-label{font-size:16px;line-height:24px;font-weight:500;color:#fff;opacity:.9}
+.pf-input{flex:1;min-width:0;border:0;outline:none;background:transparent;color:#fff;font-size:16px;line-height:24px;font-weight:400;padding:0}
+.pf-input::placeholder{color:rgba(255,255,255,.6)}
+.pf-area{width:100%;height:124px;border:0;outline:none;resize:none;border-radius:10px;background:#fff;padding:12px;font-size:16px;line-height:24px;color:#272727;font-family:inherit}
+.pf-area::placeholder{color:#C2C1C4}
 .my-sheet{position:relative;z-index:1;margin-top:28px;background:#F8F7F9;border-radius:24px 24px 0 0;min-height:100%;padding:20px 0 calc(76px + var(--tbb));box-shadow:0 -4px 16px rgba(0,0,0,.06);animation:sheetUp .5s cubic-bezier(.22,1,.36,1) both}
 .mtabs{display:flex;position:sticky;top:0;z-index:3;background:#F8F7F9;border-bottom:1px solid #EAE9EC}
 .mtabs>div{flex:1;display:flex;justify-content:center}
@@ -273,7 +287,7 @@ Apple로 시작하기</button>
 <div style="padding: 0 24px; margin-top: 56px">
 <label for="nick" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">별명</label>
 <div style="display: flex; align-items: center; gap: 8px; border-bottom: 1.5px solid {{nickLine}}; height: 52px">
-<input id="nick" value="{{nick}}" onChange="{{onNick}}" placeholder="6글자 이내로 입력해 주세요" autoComplete="off" style="flex: 1; min-width: 0; border: 0; outline: none; font-size: 16px; font-weight: 700; color: #000000; background: transparent">
+<input id="nick" value="{{nick}}" onChange="{{onNick}}" placeholder="6글자 이내로 입력해 주세요" autoComplete="off" style="flex: 1; min-width: 0; border: 0; outline: none; font-size: 16px; line-height: 24px; font-weight: 400; color: #000000; background: transparent; padding: 0">
 <sc-if value="{{hasNick}}" hint-placeholder-val="{{ false }}">
 <button class="iconbtn" onClick="{{clearNick}}" aria-label="입력 지우기" style="width: 32px; height: 32px"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#C2C1C4"/><path d="M15 9l-6 6M9 9l6 6" stroke="#ffffff" stroke-width="2" stroke-linecap="round"/></svg></button>
 </sc-if>
@@ -528,7 +542,7 @@ Apple로 시작하기</button>
 <div class="tnav"><div class="tnav-row">
 <button class="tic" onClick="{{detailBack}}" aria-label="뒤로가기"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill="currentColor" d="M14.2929 5.29289C14.6834 4.90237 15.3164 4.90237 15.707 5.29289C16.0975 5.68342 16.0975 6.31643 15.707 6.70696L10.414 11.9999L15.707 17.2929C16.0975 17.6834 16.0975 18.3164 15.707 18.707C15.3164 19.0975 14.6834 19.0975 14.2929 18.707L8.29289 12.707C7.90237 12.3164 7.90237 11.6834 8.29289 11.2929L14.2929 5.29289Z"/></svg></button>
 <span class="tnav-title">{{d.title}}</span>
-<button class="tic" onClick="{{toggleWish}}" aria-label="{{wishLabel}}" aria-pressed="{{wished}}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill="currentColor" d="M21 8.5C21 7.30653 20.5256 6.16227 19.6816 5.31836C18.8377 4.47445 17.6935 4 16.5 4C15.7202 4 15.1131 4.10999 14.5518 4.35449C13.984 4.60181 13.4 5.01407 12.707 5.70703C12.3165 6.09756 11.6835 6.09756 11.293 5.70703C10.6 5.01407 10.016 4.60181 9.44824 4.35449C8.88687 4.10999 8.27982 4 7.5 4C6.30653 4 5.16227 4.47445 4.31836 5.31836C3.47445 6.16227 3 7.30653 3 8.5C3 10.116 3.91951 11.4583 5.15039 12.7363L12 19.5859L18.2998 13.2861C19.792 11.824 21 10.3359 21 8.5ZM23 8.5C23 11.2396 21.1925 13.2488 19.7061 14.7061L19.707 14.707L12.707 21.707C12.3165 22.0976 11.6835 22.0976 11.293 21.707L4.30469 14.7188C2.79906 13.2633 1 11.253 1 8.5C1 6.77609 1.68433 5.12231 2.90332 3.90332C4.12231 2.68433 5.77609 2 7.5 2C8.48018 2 9.37344 2.14001 10.2471 2.52051C10.8603 2.78761 11.4318 3.16121 12 3.6416C12.5682 3.16121 13.1397 2.78761 13.7529 2.52051C14.6266 2.14001 15.5198 2 16.5 2C18.2239 2 19.8777 2.68433 21.0967 3.90332C22.3157 5.12231 23 6.77609 23 8.5Z"/><path fill="{{heartFill}}" d="M21 8.5C21 7.30653 20.5256 6.16227 19.6816 5.31836C18.8377 4.47445 17.6935 4 16.5 4C15.7202 4 15.1131 4.10999 14.5518 4.35449C13.984 4.60181 13.4 5.01407 12.707 5.70703C12.3165 6.09756 11.6835 6.09756 11.293 5.70703C10.6 5.01407 10.016 4.60181 9.44824 4.35449C8.88687 4.10999 8.27982 4 7.5 4C6.30653 4 5.16227 4.47445 4.31836 5.31836C3.47445 6.16227 3 7.30653 3 8.5C3 10.116 3.91951 11.4583 5.15039 12.7363L12 19.5859L18.2998 13.2861C19.792 11.824 21 10.3359 21 8.5Z"/></svg></button>
+<button class="tic" onClick="{{toggleWish}}" aria-label="{{wishLabel}}" aria-pressed="{{wished}}" style="color: {{heartColor}}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill="currentColor" d="M21 8.5C21 7.30653 20.5256 6.16227 19.6816 5.31836C18.8377 4.47445 17.6935 4 16.5 4C15.7202 4 15.1131 4.10999 14.5518 4.35449C13.984 4.60181 13.4 5.01407 12.707 5.70703C12.3165 6.09756 11.6835 6.09756 11.293 5.70703C10.6 5.01407 10.016 4.60181 9.44824 4.35449C8.88687 4.10999 8.27982 4 7.5 4C6.30653 4 5.16227 4.47445 4.31836 5.31836C3.47445 6.16227 3 7.30653 3 8.5C3 10.116 3.91951 11.4583 5.15039 12.7363L12 19.5859L18.2998 13.2861C19.792 11.824 21 10.3359 21 8.5ZM23 8.5C23 11.2396 21.1925 13.2488 19.7061 14.7061L19.707 14.707L12.707 21.707C12.3165 22.0976 11.6835 22.0976 11.293 21.707L4.30469 14.7188C2.79906 13.2633 1 11.253 1 8.5C1 6.77609 1.68433 5.12231 2.90332 3.90332C4.12231 2.68433 5.77609 2 7.5 2C8.48018 2 9.37344 2.14001 10.2471 2.52051C10.8603 2.78761 11.4318 3.16121 12 3.6416C12.5682 3.16121 13.1397 2.78761 13.7529 2.52051C14.6266 2.14001 15.5198 2 16.5 2C18.2239 2 19.8777 2.68433 21.0967 3.90332C22.3157 5.12231 23 6.77609 23 8.5Z"/><path fill="{{heartFill}}" d="M21 8.5C21 7.30653 20.5256 6.16227 19.6816 5.31836C18.8377 4.47445 17.6935 4 16.5 4C15.7202 4 15.1131 4.10999 14.5518 4.35449C13.984 4.60181 13.4 5.01407 12.707 5.70703C12.3165 6.09756 11.6835 6.09756 11.293 5.70703C10.6 5.01407 10.016 4.60181 9.44824 4.35449C8.88687 4.10999 8.27982 4 7.5 4C6.30653 4 5.16227 4.47445 4.31836 5.31836C3.47445 6.16227 3 7.30653 3 8.5C3 10.116 3.91951 11.4583 5.15039 12.7363L12 19.5859L18.2998 13.2861C19.792 11.824 21 10.3359 21 8.5Z"/></svg></button>
 </div></div>
 <div class="scroll" onScroll="{{onDetailScroll}}">
 <div style="height: 410px; position: relative; overflow: hidden; background: #2C2B2E">
@@ -639,7 +653,7 @@ Apple로 시작하기</button>
 <sc-for list="{{dReviews}}" as="r" hint-placeholder-count="3">
 <article class="review">
 <div style="display: flex; align-items: center; gap: 10px">
-<sc-if value="{{r.mine}}" hint-placeholder-val="{{ true }}"><img src="./assets/image-a3c5.jpg" alt="" style="width: 36px; height: 36px; border-radius: 18px; object-fit: cover"></sc-if>
+<sc-if value="{{r.mine}}" hint-placeholder-val="{{ true }}"><img src="./assets/avatars/{{avatar}}.jpg" alt="" style="width: 36px; height: 36px; border-radius: 18px; object-fit: cover"></sc-if>
 <sc-if value="{{r.other}}" hint-placeholder-val="{{ false }}"><span style="width: 36px; height: 36px; border-radius: 18px; background: {{r.avBg}}; color: #ffffff; font-size: 14px; font-weight: 700; display: flex; align-items: center; justify-content: center">{{r.initial}}</span></sc-if>
 <div style="flex: 1; min-width: 0">
 <div style="font-size: 13px; color: #5E5D60">{{r.author}} <span style="color: #A4A3A6; margin-left: 4px">{{r.date}}</span></div>
@@ -749,7 +763,7 @@ Apple로 시작하기</button>
 <button class="tic" onClick="{{openSettings}}" aria-label="설정" style="color: #ffffff"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill="currentColor" d="M13.2198 4C13.2198 3.73478 13.1144 3.48051 12.9268 3.29297C12.7393 3.10552 12.485 3 12.2198 3H11.7804C11.5152 3 11.2609 3.10552 11.0733 3.29297C10.8858 3.48051 10.7804 3.73478 10.7804 4V4.18066C10.7798 4.70675 10.6403 5.22422 10.377 5.67969C10.1138 6.13494 9.73579 6.51341 9.28036 6.77637L9.27939 6.77539L8.85263 7.02441L8.8497 7.02637C8.39375 7.28951 7.87614 7.42773 7.3497 7.42773C6.82323 7.42767 6.30564 7.28961 5.8497 7.02637L5.72958 6.96191C5.71984 6.95672 5.70985 6.95181 5.70029 6.94629C5.47083 6.81395 5.19837 6.77825 4.94247 6.84668C4.68657 6.91512 4.46782 7.0823 4.33505 7.31152L4.11533 7.69141C3.98383 7.92042 3.94855 8.19208 4.01669 8.44727C4.07659 8.67125 4.21196 8.86674 4.39853 9.00098L4.48154 9.05469L4.53525 9.08789L4.68466 9.1875C5.11384 9.44748 5.47118 9.80977 5.72372 10.2441C5.98687 10.6968 6.12681 11.2108 6.12997 11.7344V12.2461L6.12411 12.4434C6.09563 12.9034 5.96206 13.3518 5.73154 13.7529C5.47086 14.2065 5.09511 14.5827 4.64365 14.8467L4.49423 14.9375C4.48997 14.9401 4.48584 14.9428 4.48154 14.9453C4.25231 15.0781 4.08513 15.2968 4.01669 15.5527C3.94855 15.8079 3.98383 16.0796 4.11533 16.3086L4.33408 16.6885C4.46685 16.9177 4.68657 17.0849 4.94247 17.1533C5.19837 17.2217 5.47083 17.186 5.70029 17.0537C5.70985 17.0482 5.71984 17.0433 5.72958 17.0381L5.8497 16.9736C6.30564 16.7104 6.82323 16.5723 7.3497 16.5723C7.87614 16.5723 8.39375 16.7105 8.8497 16.9736L8.85263 16.9756L9.27939 17.2236C9.73484 17.4866 10.1138 17.865 10.377 18.3203C10.6403 18.7758 10.7798 19.2932 10.7804 19.8193V20C10.7804 20.2652 10.8858 20.5195 11.0733 20.707C11.2609 20.8945 11.5152 21 11.7804 21H12.2198C12.485 21 12.7393 20.8945 12.9268 20.707C13.1144 20.5195 13.2198 20.2652 13.2198 20V19.8193C13.2204 19.2932 13.3599 18.7758 13.6231 18.3203C13.8864 17.8651 14.2644 17.4866 14.7198 17.2236L15.1476 16.9756L15.1505 16.9736C15.6064 16.7105 16.124 16.5723 16.6505 16.5723C17.177 16.5723 17.6945 16.7104 18.1505 16.9736L18.2999 17.0537C18.5294 17.1861 18.8018 17.2217 19.0577 17.1533C19.3136 17.0849 19.5324 16.9177 19.6651 16.6885L19.879 16.3086L19.8839 16.3008L19.9288 16.2119C20.0233 16.0026 20.0433 15.7658 19.9835 15.542C19.915 15.2862 19.7478 15.0683 19.5186 14.9355L19.3995 14.8721C19.3897 14.8669 19.3798 14.862 19.3702 14.8564C18.9124 14.5921 18.5321 14.2113 18.2686 13.7529C18.0053 13.2946 17.8681 12.7747 17.8702 12.2461V11.75C17.8688 11.2228 18.0059 10.7042 18.2686 10.2471C18.5293 9.79359 18.9042 9.41629 19.3556 9.15234L19.506 9.0625L19.5186 9.05469C19.7479 8.92191 19.9151 8.70318 19.9835 8.44727C20.0516 8.19208 20.0164 7.92042 19.8849 7.69141L19.6651 7.31152C19.5324 7.0823 19.3136 6.91512 19.0577 6.84668C18.8018 6.77825 18.5294 6.81395 18.2999 6.94629C18.2903 6.95181 18.2803 6.95672 18.2706 6.96191L18.1495 7.02539C17.6936 7.28857 17.1769 7.42767 16.6505 7.42773C16.124 7.42773 15.6064 7.28951 15.1505 7.02637L15.1476 7.02441L14.7198 6.77539C14.2646 6.51245 13.8863 6.13479 13.6231 5.67969C13.3599 5.22422 13.2204 4.70675 13.2198 4.18066V4ZM14.0001 12C14.0001 10.8954 13.1047 10 12.0001 10C10.8955 10 10.0001 10.8954 10.0001 12C10.0001 13.1046 10.8955 14 12.0001 14C13.1047 14 14.0001 13.1046 14.0001 12ZM16.0001 12C16.0001 14.2091 14.2092 16 12.0001 16C9.79095 16 8.00009 14.2091 8.00009 12C8.00009 9.79086 9.79095 8 12.0001 8C14.2092 8 16.0001 9.79086 16.0001 12ZM15.2198 4.17871C15.22 4.35407 15.2668 4.52689 15.3546 4.67871C15.4205 4.79256 15.5077 4.89215 15.6114 4.97168L15.7227 5.0459L16.1495 5.29395C16.3015 5.38171 16.4749 5.42773 16.6505 5.42773C16.8259 5.42767 16.9986 5.38165 17.1505 5.29395L17.1798 5.27734L17.3292 5.19727C18.0116 4.81347 18.8171 4.71164 19.5743 4.91406C20.342 5.11935 20.9973 5.62093 21.3956 6.30859L21.6153 6.68945L21.6163 6.69043C22.0133 7.37867 22.1212 8.19629 21.9161 8.96387C21.7121 9.72683 21.2144 10.3773 20.5333 10.7764L20.5343 10.7773L20.3849 10.8672C20.3801 10.8701 20.375 10.8732 20.3702 10.876C20.2176 10.9641 20.0908 11.0914 20.003 11.2441C19.9153 11.3968 19.8695 11.57 19.8702 11.7461V12.2539C19.8695 12.43 19.9153 12.6032 20.003 12.7559C20.0891 12.9056 20.2128 13.0303 20.3614 13.1182L20.4903 13.1875C20.5006 13.193 20.5115 13.1992 20.5216 13.2051C21.209 13.6034 21.7108 14.2579 21.9161 15.0254C22.1205 15.7898 22.0131 16.6035 21.6202 17.29L21.6212 17.291L21.4015 17.6816L21.3956 17.6914C20.9973 18.3791 20.342 18.8806 19.5743 19.0859C18.817 19.2884 18.0117 19.1848 17.3292 18.8008V18.8027L17.1798 18.7227C17.17 18.7174 17.1601 18.7116 17.1505 18.7061C16.9986 18.6183 16.8259 18.5723 16.6505 18.5723C16.4751 18.5723 16.3024 18.6184 16.1505 18.7061L16.1495 18.7051L15.7227 18.9541L15.6114 19.0283C15.5077 19.1079 15.4205 19.2074 15.3546 19.3213C15.2668 19.4731 15.22 19.6459 15.2198 19.8213V20C15.2198 20.7955 14.9043 21.5585 14.3419 22.1211C13.7793 22.6837 13.0155 23 12.2198 23H11.7804C10.9847 23 10.2209 22.6837 9.65829 22.1211C9.09591 21.5585 8.78036 20.7955 8.78036 20V19.8213L8.77158 19.6904C8.75437 19.5609 8.71143 19.4352 8.6456 19.3213C8.57973 19.2074 8.49247 19.1079 8.38876 19.0283L8.27744 18.9541L7.8497 18.7051C7.69785 18.6176 7.52496 18.5723 7.3497 18.5723C7.1743 18.5723 7.00161 18.6183 6.8497 18.7061C6.84009 18.7116 6.83019 18.7174 6.8204 18.7227L6.67099 18.8027L6.67001 18.8008C5.9877 19.1844 5.18293 19.2883 4.42587 19.0859C3.65815 18.8806 3.00292 18.3791 2.60458 17.6914L2.38486 17.3115L2.38388 17.3096C1.9869 16.6213 1.87896 15.8037 2.08408 15.0361C2.28806 14.2733 2.78498 13.6217 3.46591 13.2227L3.62997 13.124C3.78258 13.0359 3.90936 12.9086 3.99716 12.7559C4.08486 12.6032 4.13067 12.43 4.12997 12.2539V11.7461L4.12119 11.6162C4.10351 11.4873 4.06006 11.3622 3.99423 11.249C3.90653 11.0984 3.78095 10.9729 3.62997 10.8857C3.61145 10.875 3.59308 10.8634 3.57529 10.8516L3.42587 10.752C2.76609 10.351 2.28393 9.71127 2.08408 8.96387C1.87896 8.19629 1.9869 7.37867 2.38388 6.69043L2.38486 6.68848L2.60458 6.30859C3.00291 5.62093 3.65814 5.11935 4.42587 4.91406C5.18277 4.71171 5.98779 4.81479 6.67001 5.19824L6.67099 5.19727L6.8204 5.27734C6.83019 5.28257 6.84009 5.2884 6.8497 5.29395C7.00161 5.38165 7.1743 5.42767 7.3497 5.42773C7.52513 5.42773 7.69775 5.38161 7.8497 5.29395L8.27744 5.0459L8.38876 4.97168C8.49247 4.89215 8.57973 4.79256 8.6456 4.67871C8.73324 4.52709 8.78006 4.3548 8.78036 4.17969V4C8.78036 3.20452 9.09591 2.44148 9.65829 1.87891C10.2209 1.3163 10.9847 1 11.7804 1H12.2198C13.0155 1 13.7793 1.3163 14.3419 1.87891C14.9043 2.44148 15.2198 3.20452 15.2198 4V4.17871Z"/></svg></button>
 </div></div>
 <div style="display: flex; align-items: center; gap: 22px; padding: 6px 24px 0">
-<img src="./assets/avatar.jpg" alt="프로필 사진" style="width: 120px; height: 120px; border-radius: 60px; object-fit: cover; border: 3px solid rgba(255,255,255,.7); flex: none; box-sizing: border-box">
+<img src="./assets/avatars/{{avatar}}.jpg" alt="프로필 사진" style="width: 120px; height: 120px; border-radius: 60px; object-fit: cover; border: 3px solid rgba(255,255,255,.7); flex: none; box-sizing: border-box">
 <div style="color: #ffffff; flex: 1; min-width: 0">
 <div class="ellip1" style="font-size: 24px; font-weight: 700; line-height: 1.2">{{nickname}}</div>
 <div style="display: flex; gap: 40px; margin-top: 18px">
@@ -819,6 +833,48 @@ Apple로 시작하기</button>
 </div>
 </sc-if>
 </div>
+</div>
+</div>
+</sc-if>
+
+<!-- ===================== PROFILE SETTINGS ===================== -->
+<sc-if value="{{isProfile}}" hint-placeholder-val="{{ false }}">
+<div class="scr scr-in pf">
+<!-- Figma top-nav type=title (배경 없음, 흰색): 뒤로 · 프로필 설정 · 저장(circle-check-big) -->
+<div class="tnav clear"><div class="tnav-row">
+<button class="tic" onClick="{{profileBack}}" aria-label="뒤로가기" style="color: #ffffff"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path fill="currentColor" d="M14.2929 5.29289C14.6834 4.90237 15.3164 4.90237 15.707 5.29289C16.0975 5.68342 16.0975 6.31643 15.707 6.70696L10.414 11.9999L15.707 17.2929C16.0975 17.6834 16.0975 18.3164 15.707 18.707C15.3164 19.0975 14.6834 19.0975 14.2929 18.707L8.29289 12.707C7.90237 12.3164 7.90237 11.6834 8.29289 11.2929L14.2929 5.29289Z"/></svg></button>
+<span class="tnav-title">프로필 설정</span>
+<button class="tic" onClick="{{profileSave}}" aria-label="저장" style="color: #ffffff"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.801 10A10 10 0 1 1 17 3.335"/><path d="m9 11 3 3L22 4"/></svg></button>
+</div></div>
+<div class="scroll" style="padding-bottom: calc(80px + var(--hb34))">
+<!-- 캐릭터 선택: 가로 스크롤, 고른 캐릭터가 가운데에 크게 -->
+<div style="margin-top: 62px">
+<div style="height: 8px; display: flex; justify-content: center"><span style="width: 8px; height: 8px; border-radius: 4px; background: #ffffff"></span></div>
+<div class="pv-row" role="radiogroup" aria-label="프로필 캐릭터 선택">
+<sc-for list="{{avatarList}}" as="a" hint-placeholder-count="12">
+<button class="pv-item {{a.cls}}" onClick="{{a.pick}}" role="radio" aria-checked="{{a.on}}" aria-label="{{a.label}}"><img src="{{a.src}}" alt=""></button>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 36px; padding: 36px 0">
+<div style="padding: 0 24px; display: flex; flex-direction: column; gap: 6px">
+<label for="pnick" class="pf-label">별명 설정</label>
+<div style="display: flex; align-items: center; gap: 8px; height: 42px; border-bottom: 1px solid rgba(255,255,255,.8)">
+<input id="pnick" class="pf-input" value="{{pNick}}" onChange="{{onPNick}}" placeholder="6글자 이내로 입력해 주세요" autoComplete="off">
+<sc-if value="{{pHasNick}}" hint-placeholder-val="{{ true }}"><button class="tic" onClick="{{clearPNick}}" aria-label="별명 지우기" style="color: #ffffff"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg></button></sc-if>
+</div>
+<sc-if value="{{pHasNickMsg}}" hint-placeholder-val="{{ false }}"><p style="margin: 2px 0 0; font-size: 14px; color: #ffffff; opacity: .9">{{pNickMsg}}</p></sc-if>
+</div>
+<div style="padding: 0 24px; display: flex; flex-direction: column; gap: 8px">
+<label for="pintro" class="pf-label">한줄소개 작성</label>
+<textarea id="pintro" class="pf-area" value="{{pIntro}}" onChange="{{onPIntro}}" maxLength="70" placeholder="소개글은 최대 70글자까지 작성 가능합니다."></textarea>
+</div>
+</div>
+</div>
+<div style="position: absolute; left: 0; right: 0; bottom: calc(24px + var(--hb34)); display: flex; justify-content: center; align-items: center; gap: 12px">
+<button onClick="{{askLogout}}" style="font-size: 16px; line-height: 24px; font-weight: 500; color: #ffffff">로그아웃</button>
+<span style="font-size: 14px; color: #ffffff; opacity: .3">|</span>
+<button onClick="{{askWithdraw}}" style="font-size: 16px; line-height: 24px; font-weight: 400; color: #ffffff">회원탈퇴</button>
 </div>
 </div>
 </sc-if>
@@ -948,6 +1004,7 @@ Apple로 시작하기</button>
 // ===== KOPIS 공연예술통합전산망 OpenAPI 데이터 (수집본) =====
 const META_URL = './assets/meta.json';
 const IMAGES_URL = './assets/images.json';
+const AVATARS = [['lovely-1','러블리'],['lovely-2','러블리'],['modern-1','모던'],['modern-2','모던'],['chic-1','시크'],['chic-2','시크'],['casual-1','캐주얼'],['casual-2','캐주얼'],['fresh-1','프레시'],['fresh-2','프레시'],['preppy-1','프레피'],['preppy-2','프레피']].map(([id, label]) => ({ id, label }));
 let SHOWS = [], BYID = {}, BOX = { AAAA: [], GGGA: [] }, REGIONBOX = {}, FETCHED = '', IMG = {}, STY = {};
 const ymd = (d) => { const p = (n) => String(n).padStart(2, '0'); return d.getFullYear() + '.' + p(d.getMonth() + 1) + '.' + p(d.getDate()); };
 const TODAY = ymd(new Date());
@@ -1028,7 +1085,7 @@ class Component extends DCLogic {
     super(props);
     const start = (props.startScreen && props.startScreen !== 'splash') ? props.startScreen : 'login';
     this.state = {
-      screen: start, logoDone: start !== 'login', prev: 'home', region: '', nick: '', nickFinal: '',
+      screen: start, logoDone: start !== 'login', prev: 'home', region: '', nick: '', nickFinal: '', avatar: 'casual-2', intro: '대학로 소극장을 사랑하는 관객입니다.\n요즘은 창작 뮤지컬에 빠져 있어요.', pAvatar: 'casual-2', pNick: '', pIntro: '',
       homeCat: 'all', banner: 0, bpos: 1, bnoanim: false, scrolled: false, sheet: null, fTab: 'region',
       qFocus: false, calY: new Date().getFullYear(), calM: new Date().getMonth(), q: '', submitted: false, kbOpen: false, kbShift: false, kbNum: false, recent: ['시카고', '해밀턴', '러브레터'],
       sDate: '', sRegion: '', fDate: '', fRegion: '', sCat: 'all',
@@ -1093,6 +1150,7 @@ class Component extends DCLogic {
     this._anim = anim;
   }
   componentDidUpdate(pp) {
+    if (this._centerAvatar && this.state.screen === 'profile') { this._centerAvatar = false; setTimeout(() => { const n = document.querySelector('.pv-item.on'); if (n) n.scrollIntoView({ inline: 'center', block: 'nearest' }); }, 0); }
     if (this.state.screen === 'login') this.mountLogo(false); else this._logoEl = null;
     if (this._scrollReview && this.state.screen === 'detail') {
       this._scrollReview = false;
@@ -1118,6 +1176,13 @@ class Component extends DCLogic {
     const s = this.state;
     const set = (o) => this.setState(o);
     const nickname = s.nickFinal || '취향탐구중';
+    let pNickMsg = '', pNickBad = false;
+    { const n = s.pNick;
+      if (!n.length) { pNickBad = true; pNickMsg = '별명을 입력해주세요.'; }
+      else if (n.length > 8) { pNickBad = true; pNickMsg = '8글자 이내로 별명을 정해주세요.'; }
+      else if (/[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]/.test(n)) { pNickBad = true; pNickMsg = '한글, 영문, 숫자만 사용할 수 있어요.'; }
+      else if (n.length < 2) { pNickBad = true; pNickMsg = '2글자 이상 입력해주세요.'; }
+      else if (n !== nickname && ['연뮤덕', '극장가는길', '관리자', '내안의연뮤'].indexOf(n) >= 0) { pNickBad = true; pNickMsg = '이미 사용 중인 별명이에요.'; } }
     const byId = BYID;
     const ready = s.loaded && SHOWS.length > 0;
     const shortOf = (t) => (t === '연극' ? '연' : '뮤');
@@ -1368,7 +1433,7 @@ class Component extends DCLogic {
       closeSheet: () => set({ sheet: null }),
       // detail
       d, wished, wishLabel: wished ? '찜 해제' : '찜하기',
-      heartFill: wished ? '#000000' : 'none',
+      heartFill: wished ? '#FA6363' : 'none', heartColor: wished ? '#FA6363' : '#000000',
       toggleWish: () => { set({ wish: Object.assign({}, s.wish, { [base.id]: !wished }) }); this.showToast(wished ? '찜을 해제했어요' : '찜한 공연에 추가했어요'); },
       detailBack: () => set({ screen: s.prev || 'home' }),
       tInfo: s.dTab === 'info' ? 'on' : '', tTicket: s.dTab === 'ticket' ? 'on' : '', tReview: s.dTab === 'review' ? 'on' : '',
@@ -1405,14 +1470,22 @@ class Component extends DCLogic {
         this.showToast('관람후기가 등록되었어요');
       },
       // my
-      nickname, intro: '대학로 소극장을 사랑하는 관객입니다.\n요즘은 창작 뮤지컬에 빠져 있어요.',
+      nickname, intro: s.intro, avatar: s.avatar,
       wishCount: wishList.length, myReviewCount: myRevs.length,
       myTabReview: s.myTab === 'review' ? 'on' : '', myTabWish: s.myTab === 'wish' ? 'on' : '',
       myReviewTab: () => set({ myTab: 'review' }), myWishTab: () => set({ myTab: 'wish' }),
       showMyReviews: s.myTab === 'review', showMyWish: s.myTab === 'wish',
       myReviews: myRevs, noMyReviews: myRevs.length === 0, wishList, noWish: wishList.length === 0,
       openSettings: () => set({ sheet: 'settings' }),
-      onProfileEdit: () => { set({ sheet: null }); this.showToast('프로필 설정은 준비 중이에요'); },
+      onProfileEdit: () => { this._centerAvatar = true; set({ sheet: null, screen: 'profile', pAvatar: s.avatar, pNick: nickname, pIntro: s.intro }); },
+      isProfile: s.screen === 'profile',
+      avatarList: AVATARS.map((a) => ({ src: './assets/avatars/' + a.id + '.jpg', label: a.label + ' 캐릭터', cls: s.pAvatar === a.id ? 'on' : '', on: s.pAvatar === a.id,
+        pick: (e) => { const el = e.currentTarget; set({ pAvatar: a.id }); el.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' }); } })),
+      pNick: s.pNick, pIntro: s.pIntro, pHasNick: s.pNick.length > 0, pNickMsg: pNickMsg, pHasNickMsg: !!pNickMsg,
+      onPNick: (e) => set({ pNick: e.target.value }), clearPNick: () => set({ pNick: '' }),
+      onPIntro: (e) => set({ pIntro: e.target.value.slice(0, 70) }),
+      profileBack: () => set({ screen: 'my' }),
+      profileSave: () => { if (pNickBad) { this.showToast(pNickMsg || '별명을 확인해주세요'); return; } set({ screen: 'my', avatar: s.pAvatar, nickFinal: s.pNick, intro: s.pIntro }); this.showToast('프로필을 저장했어요'); },
       askLogout: () => set({ modal: 'logout' }), askWithdraw: () => set({ modal: 'withdraw' }),
       // modal & toast
       hasModal: !!s.modal, modal: modalDefs[s.modal] || modalDefs.logout,
