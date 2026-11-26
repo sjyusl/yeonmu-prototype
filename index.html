@@ -111,7 +111,11 @@ a{color:#9A6BE3}a:hover{color:#7d4fd0}
 .tab.on{background:#F7EFFF;color:#9A6BE3;font-weight:600}
 .divider{height:8px;background:#F8F7F9}
 .my-top{position:sticky;top:0;z-index:0}
-.my-sheet{position:relative;z-index:1;margin-top:28px;background:#fff;border-radius:24px 24px 0 0;min-height:100%;padding:8px 0 calc(76px + var(--tbb));box-shadow:0 -4px 16px rgba(0,0,0,.06);animation:sheetUp .5s cubic-bezier(.22,1,.36,1) both}
+.my-sheet{position:relative;z-index:1;margin-top:28px;background:#F8F7F9;border-radius:24px 24px 0 0;min-height:100%;padding:20px 0 calc(76px + var(--tbb));box-shadow:0 -4px 16px rgba(0,0,0,.06);animation:sheetUp .5s cubic-bezier(.22,1,.36,1) both}
+.mtabs{display:flex;position:sticky;top:0;z-index:3;background:#F8F7F9;border-bottom:1px solid #EAE9EC}
+.mtabs>div{flex:1;display:flex;justify-content:center}
+.mtab{padding:8px 12px 6px;font-size:16px;line-height:24px;font-weight:700;color:#7C7B7E;border-bottom:2px solid transparent;margin-bottom:-1px}
+.mtab.on{color:#9A6BE3;border-bottom-color:#B086F0}
 @keyframes sheetUp{from{transform:translateY(60%)}to{transform:none}}
 /* top-nav 공통 (type=title / search / search-filter) */
 .tnav{flex:none;position:relative;z-index:6;background:#fff;padding:calc(12px + var(--sb)) 24px 12px;display:flex;flex-direction:column;gap:12px}
@@ -759,9 +763,10 @@ Apple로 시작하기</button>
 </div>
 <!-- 바텀시트: 진입 시 아래에서 올라오고, 스크롤하면 프로필 위를 덮음. 화면 끝까지 흰색 -->
 <div class="my-sheet">
-<div style="display: flex; justify-content: center; padding: 0 24px; position: sticky; top: 0; background: #ffffff; z-index: 3; border-radius: 24px 24px 0 0">
-<button class="utab auto {{myTabReview}}" onClick="{{myReviewTab}}">내 후기</button>
-<button class="utab auto {{myTabWish}}" onClick="{{myWishTab}}">찜한 공연</button>
+<!-- Figma tab-item(16/24, padding 8·12): 화면을 반씩 나눠 가운데 정렬, 아래 1px 구분선 -->
+<div class="mtabs">
+<div><button class="mtab {{myTabWish}}" onClick="{{myWishTab}}">찜한 공연</button></div>
+<div><button class="mtab {{myTabReview}}" onClick="{{myReviewTab}}">내 후기</button></div>
 </div>
 <sc-if value="{{showMyReviews}}" hint-placeholder-val="{{ true }}">
 <div style="padding: 20px 24px 0">
