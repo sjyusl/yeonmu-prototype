@@ -1444,7 +1444,7 @@ class Component extends DCLogic {
       detailBack: () => set({ screen: s.prev || 'home' }),
       tInfo: s.dTab === 'info' ? 'on' : '', tTicket: s.dTab === 'ticket' ? 'on' : '', tReview: s.dTab === 'review' ? 'on' : '',
       onDetailScroll: (e) => {
-        { const f = document.getElementById('fab-write'); if (f) { f.classList.add('fold'); clearTimeout(this._fabT); this._fabT = setTimeout(() => f.classList.remove('fold'), 250); } }
+        { const f = document.getElementById('fab-write'); if (f) { f.classList.add('fold'); clearTimeout(this._fabT); this._fabT = setTimeout(() => f.classList.remove('fold'), 5000); } }
         const el = e.currentTarget, y = el.scrollTop + 60;
         const pos = (id) => { const n = el.querySelector('#' + id); return n ? n.offsetTop : 1e9; };
         const k = y >= pos('d-review') - 10 || el.scrollTop + el.clientHeight >= el.scrollHeight - 4 ? 'review' : y >= pos('d-ticket') ? 'ticket' : 'info';
