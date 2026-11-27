@@ -1119,6 +1119,15 @@ class Component extends DCLogic {
   }
   bnGo(p) {
     clearTimeout(this._bnSnap);
+    const cur = this.state.bpos;
+    // 복제 칸(0·4)에 있는 상태에서 또 넘기면 트랙 밖(빈 칸)으로 나가 이미지가 사라짐 → 먼저 진짜 칸으로 순간 이동한 뒤 이어서 이동
+    if (cur === 0 || cur === 4) {
+      const real = cur === 4 ? 1 : 3, target = Math.max(0, Math.min(4, real + (p - cur)));
+      this.setState({ bnoanim: true, bpos: real });
+      requestAnimationFrame(() => requestAnimationFrame(() => this.bnGo(target)));
+      return;
+    }
+    p = Math.max(0, Math.min(4, p));
     this.setState({ bpos: p, bnoanim: false, banner: ((p - 1) % 3 + 3) % 3 });
     if (p === 0 || p === 4) {
       this._bnSnap = setTimeout(() => {
